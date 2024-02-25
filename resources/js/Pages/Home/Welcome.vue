@@ -1,6 +1,8 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
-
+import Layout from "../../Layouts/Layout.vue";
+import Banner from "../Home/Partials/Bnner.vue";
+import CategoryBox from "../Home/Partials/CategoryBox.vue";
 defineProps({
     canLogin: {
         type: Boolean,
@@ -17,12 +19,16 @@ defineProps({
         required: true,
     },
 });
+components: {
+    Layout;
+    Banner;
+}
 </script>
 
 <template>
     <Head title="Welcome" />
 
-    <div
+    <!-- <div
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
     >
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
@@ -48,7 +54,35 @@ defineProps({
                 >
             </template>
         </div>
-    </div>
+    </div> -->
+
+    <Layout>
+        <!-- Banner Section -->
+        <div class="banner">
+            <div class="container">
+                <div class="slider-container has-scrollbar">
+                    <Banner
+                        name="WOMEN'S LATEST FASHION SALE"
+                        title="Trending Item"
+                        price="20.00"
+                        buttonText="Shop Now"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!--
+      - CATEGORY
+    -->
+
+        <div class="category">
+            <div class="container">
+                <div class="category-item-container has-scrollbar">
+                    <CategoryBox />
+                </div>
+            </div>
+        </div>
+    </Layout>
 </template>
 
 <style>
