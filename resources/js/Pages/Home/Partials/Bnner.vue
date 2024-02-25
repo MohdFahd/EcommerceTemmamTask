@@ -15,7 +15,7 @@
                 starting at &dollar;<b>{{ price }}</b>
             </p>
 
-            <Button :text="buttonText" />
+            <Button :text="buttonText" href="/" />
         </div>
     </div>
 </template>

@@ -18,6 +18,10 @@ defineProps({
         type: String,
         required: true,
     },
+    categories: {
+        type: Array,
+        required: true,
+    },
 });
 components: {
     Layout;
@@ -78,7 +82,12 @@ components: {
         <div class="category">
             <div class="container">
                 <div class="category-item-container has-scrollbar">
-                    <CategoryBox />
+                    <CategoryBox
+                        v-for="category in categories"
+                        :key="category.id"
+                        :name="category.name"
+                        :img="category.img"
+                    />
                 </div>
             </div>
         </div>
