@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use Illuminate\Foundation\Application;
@@ -16,22 +17,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Home/Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'categories' => Category::all()->map(function ($category) {
-            return [
-                'name' => $category->name,
-                'description' => $category->description,
-                'img' => $category->img,
-            ];
-        }),
-    ]);
-});
+Route::get('/',[CategoryController::class,'show']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import Layout from "../../Layouts/Layout.vue";
 import Banner from "../Home/Partials/Bnner.vue";
 import CategoryBox from "../Home/Partials/CategoryBox.vue";
+import CategoryList from "../Home/Partials/CategoryList.vue";
 defineProps({
     canLogin: {
         type: Boolean,
@@ -19,14 +20,20 @@ defineProps({
         required: true,
     },
     categories: {
-        type: Array,
+        type: Object,
         required: true,
     },
 });
 components: {
     Layout;
     Banner;
+    CategoryList;
 }
+</script>
+<script>
+export default {
+    layout: Layout,
+};
 </script>
 
 <template>
@@ -60,38 +67,212 @@ components: {
         </div>
     </div> -->
 
-    <Layout>
-        <!-- Banner Section -->
-        <div class="banner">
-            <div class="container">
-                <div class="slider-container has-scrollbar">
-                    <Banner
-                        name="WOMEN'S LATEST FASHION SALE"
-                        title="Trending Item"
-                        price="20.00"
-                        buttonText="Shop Now"
-                    />
-                </div>
+    <!-- Banner Section -->
+    <div class="banner">
+        <div class="container">
+            <div class="slider-container has-scrollbar">
+                <Banner
+                    name="WOMEN'S LATEST FASHION SALE"
+                    title="Trending Item"
+                    price="20.00"
+                    buttonText="Shop Now"
+                />
             </div>
         </div>
+    </div>
 
-        <!--
+    <!--
       - CATEGORY
     -->
 
-        <div class="category">
-            <div class="container">
-                <div class="category-item-container has-scrollbar">
-                    <CategoryBox
-                        v-for="category in categories"
-                        :key="category.id"
-                        :name="category.name"
-                        :img="category.img"
-                    />
+    <div class="category">
+        <div class="container">
+            <div class="category-item-container has-scrollbar">
+                <CategoryBox
+                    v-for="category in categories"
+                    :key="category.id"
+                    :name="category.name"
+                    :img="category.img"
+                />
+            </div>
+        </div>
+    </div>
+
+    <!--
+      - PRODUCT
+    -->
+    <div class="product-container">
+        <div class="container">
+            <!--
+          - SIDEBAR
+        -->
+
+            <div class="sidebar has-scrollbar" data-mobile-menu>
+                <div class="sidebar-category">
+                    <div class="sidebar-top">
+                        <h2 class="sidebar-title">Category</h2>
+
+                        <button
+                            class="sidebar-close-btn"
+                            data-mobile-menu-close-btn
+                        >
+                            <ion-icon name="close-outline"></ion-icon>
+                        </button>
+                    </div>
+
+                    <ul class="sidebar-menu-category-list">
+                        <CategoryList
+                            v-for="(category, name) in categories"
+                            :content="category"
+                            :key="name"
+                            :name="name"
+                        />
+                    </ul>
+                </div>
+
+                <div class="product-showcase">
+                    <h3 class="showcase-heading">best sellers</h3>
+
+                    <div class="showcase-wrapper">
+                        <div class="showcase-container">
+                            <div class="showcase">
+                                <a href="#" class="showcase-img-box">
+                                    <img
+                                        src="assets/images/products/1.jpg"
+                                        alt="baby fabric shoes"
+                                        width="75"
+                                        height="75"
+                                        class="showcase-img"
+                                    />
+                                </a>
+
+                                <div class="showcase-content">
+                                    <a href="#">
+                                        <h4 class="showcase-title">
+                                            baby fabric shoes
+                                        </h4>
+                                    </a>
+
+                                    <div class="showcase-rating">
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                    </div>
+
+                                    <div class="price-box">
+                                        <del>$5.00</del>
+                                        <p class="price">$4.00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="showcase">
+                                <a href="#" class="showcase-img-box">
+                                    <img
+                                        src="assets/images/products/2.jpg"
+                                        alt="men's hoodies t-shirt"
+                                        class="showcase-img"
+                                        width="75"
+                                        height="75"
+                                    />
+                                </a>
+
+                                <div class="showcase-content">
+                                    <a href="#">
+                                        <h4 class="showcase-title">
+                                            men's hoodies t-shirt
+                                        </h4>
+                                    </a>
+                                    <div class="showcase-rating">
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon
+                                            name="star-half-outline"
+                                        ></ion-icon>
+                                    </div>
+
+                                    <div class="price-box">
+                                        <del>$17.00</del>
+                                        <p class="price">$7.00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="showcase">
+                                <a href="#" class="showcase-img-box">
+                                    <img
+                                        src="assets/images/products/3.jpg"
+                                        alt="girls t-shirt"
+                                        class="showcase-img"
+                                        width="75"
+                                        height="75"
+                                    />
+                                </a>
+
+                                <div class="showcase-content">
+                                    <a href="#">
+                                        <h4 class="showcase-title">
+                                            girls t-shirt
+                                        </h4>
+                                    </a>
+                                    <div class="showcase-rating">
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon
+                                            name="star-half-outline"
+                                        ></ion-icon>
+                                    </div>
+
+                                    <div class="price-box">
+                                        <del>$5.00</del>
+                                        <p class="price">$3.00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="showcase">
+                                <a href="#" class="showcase-img-box">
+                                    <img
+                                        src="assets/images/products/4.jpg"
+                                        alt="woolen hat for men"
+                                        class="showcase-img"
+                                        width="75"
+                                        height="75"
+                                    />
+                                </a>
+
+                                <div class="showcase-content">
+                                    <a href="#">
+                                        <h4 class="showcase-title">
+                                            woolen hat for men
+                                        </h4>
+                                    </a>
+                                    <div class="showcase-rating">
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                        <ion-icon name="star"></ion-icon>
+                                    </div>
+
+                                    <div class="price-box">
+                                        <del>$15.00</del>
+                                        <p class="price">$12.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </Layout>
+    </div>
 </template>
 
 <style>

@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\Slug;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
- */
 class CategoryFactory extends Factory
 {
     /**
@@ -16,10 +15,13 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        // Create a Slug instance or retrieve an existing one
+
         return [
-            'name' => fake()->name(),
+            'name' => $this->faker->name(),
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat modi amet ducimus fugit assumenda? Quibusdam omnis consectetur non nihil corrupti dicta repellat quae voluptas, ea, libero, similique accusantium asperiores nam.',
             'img' => 'assets/images/icons/coat.svg',
+            'slug_id'=> Slug::factory(),
         ];
     }
 }
