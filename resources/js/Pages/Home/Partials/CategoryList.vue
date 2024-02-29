@@ -27,10 +27,9 @@
             <!-- props[href,name,value] -->
 
             <SubmenuCategory
-                v-for="item in content"
+                v-for="item in SubCategory"
                 :key="item.id"
                 :SubContent="item"
-                @slug-emitted="handleSlugEmitted"
             />
         </ul>
     </li>
@@ -63,7 +62,7 @@ export default {
         },
     },
     props: {
-        content: {
+        SubCategory: {
             type: Array,
         },
         name: {

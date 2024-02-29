@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use Illuminate\Foundation\Application;
@@ -17,7 +18,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[CategoryController::class,'show']);
+// Route::get('/',[CategoryController::class,'show']);
+Route::get('/',[ProductController::class,'index']);
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -5,39 +5,19 @@ import Banner from "../Home/Partials/Bnner.vue";
 import CategoryBox from "../Home/Partials/CategoryBox.vue";
 import CategoryList from "../Home/Partials/CategoryList.vue";
 import { useTakeStore } from "@/Stores/TakeStore";
-const { canLogin, canRegister, categories } = defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
+import { computed } from "vue";
+const { canLogin, canRegister, categories, products } = defineProps({
+    // canLogin: Boolean,
+    // canRegister: Boolean,
     categories: { type: Object, required: true },
+    products: { type: Object, required: true },
 });
-components: {
-    Layout;
-    Banner;
-    CategoryList;
-}
-const takeStore = useTakeStore();
-takeStore.setCategories(categories);
+// const takeStore = useTakeStore();
+// takeStore.setCategories(categories);
 </script>
 <script>
 export default {
     layout: Layout,
-    computed: {
-        uniqueCategories() {
-            const groupedCategories = this.categories.reduce(
-                (acc, category) => {
-                    if (!acc[category.slug]) {
-                        acc[category.slug] = [];
-                    }
-                    acc[category.slug].push(category);
-                    return acc;
-                },
-                {}
-            );
-
-            // Convert the object back to an array
-            return Object.values(groupedCategories);
-        },
-    },
 };
 </script>
 
@@ -88,16 +68,15 @@ export default {
     <!--
       - CATEGORY
     -->
-    {{ takeStore.name }}
     <div class="category">
         <div class="container">
             <div class="category-item-container has-scrollbar">
-                <CategoryBox
+                <!-- <CategoryBox
                     v-for="category in categories"
                     :key="category.id"
                     :name="category.name"
                     :img="category.img"
-                />
+                /> -->
             </div>
         </div>
     </div>
@@ -126,16 +105,16 @@ export default {
 
                     <ul class="sidebar-menu-category-list">
                         <CategoryList
-                            v-for="category in uniqueCategories"
+                            v-for="category in categories"
                             :key="category.id"
-                            :content="category"
+                            :name="category.name"
+                            :SubCategory="category.children"
                         />
                     </ul>
                 </div>
 
                 <div class="product-showcase">
                     <h3 class="showcase-heading">best sellers</h3>
-
                     <div class="showcase-wrapper">
                         <div class="showcase-container">
                             <div class="showcase">

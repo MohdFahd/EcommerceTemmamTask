@@ -16,12 +16,13 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         // Create a Slug instance or retrieve an existing one
+        $parentCategoryID = Category::query()->inRandomOrder()->pluck('id')->first();
 
         return [
             'name' => $this->faker->name(),
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat modi amet ducimus fugit assumenda? Quibusdam omnis consectetur non nihil corrupti dicta repellat quae voluptas, ea, libero, similique accusantium asperiores nam.',
             'img' => 'assets/images/icons/coat.svg',
-            'slug' => $this->faker->randomElement(['sports', 'Tech']),
+            'parent_id' => $parentCategoryID ?: null, // Assign a random parent category ID if available, otherwise assign null // Assign a random parent category ID
         ];
     }
 }
