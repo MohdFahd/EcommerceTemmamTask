@@ -12,21 +12,15 @@ class CategoryController extends Controller
 {
     public function show()
     {
-        // Load categories with their associated slugs
-        $categoriesBySlug = Category::with('slug')->get()->groupBy(function ($category) {
-            return $category->slug->name;
-        })->map(function ($categories) {
-            return $categories->map(function ($category) {
-                return [
-                    'name' => $category->name,
-                    'description' => $category->description,
-                    'img' => $category->img,
-                ];
-            });
-        });
-
         return Inertia::render('Home/Welcome', [
-            'categories' => $categoriesBySlug,
-        ]);
+        'categories' => Category::get()->map(function ($category) {
+            return [
+                'name' => $category->name,
+                'description' => $category->description,
+                'img' => $category->img,
+                'slug'=>$category->slug,
+            ];
+        }),
+    ]);
     }
 }

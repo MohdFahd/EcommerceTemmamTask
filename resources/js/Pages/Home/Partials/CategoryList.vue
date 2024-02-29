@@ -7,6 +7,7 @@
         >
             <div class="menu-title-flex">
                 <Image :src="src" :alt="alt" :class="classes" />
+
                 <p class="menu-title">
                     {{ name }}
                 </p>
@@ -29,6 +30,7 @@
                 v-for="item in content"
                 :key="item.id"
                 :SubContent="item"
+                @slug-emitted="handleSlugEmitted"
             />
         </ul>
     </li>
@@ -53,6 +55,11 @@ export default {
     methods: {
         OpenList() {
             this.isActive = !this.isActive;
+        },
+
+        handleSlugEmitted(slug) {
+            // Handle the emitted slug value here
+            console.log("Received slug:", slug);
         },
     },
     props: {

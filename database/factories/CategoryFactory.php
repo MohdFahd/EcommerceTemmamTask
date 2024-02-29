@@ -21,7 +21,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->name(),
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat modi amet ducimus fugit assumenda? Quibusdam omnis consectetur non nihil corrupti dicta repellat quae voluptas, ea, libero, similique accusantium asperiores nam.',
             'img' => 'assets/images/icons/coat.svg',
-            'slug_id'=> Slug::factory(),
+            'slug' => $this->faker->randomElement(['sports', 'Tech']),
         ];
     }
 }

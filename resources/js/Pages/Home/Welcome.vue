@@ -4,35 +4,40 @@ import Layout from "../../Layouts/Layout.vue";
 import Banner from "../Home/Partials/Bnner.vue";
 import CategoryBox from "../Home/Partials/CategoryBox.vue";
 import CategoryList from "../Home/Partials/CategoryList.vue";
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-    categories: {
-        type: Object,
-        required: true,
-    },
+import { useTakeStore } from "@/Stores/TakeStore";
+const { canLogin, canRegister, categories } = defineProps({
+    canLogin: Boolean,
+    canRegister: Boolean,
+    categories: { type: Object, required: true },
 });
 components: {
     Layout;
     Banner;
     CategoryList;
 }
+const takeStore = useTakeStore();
+takeStore.setCategories(categories);
 </script>
 <script>
 export default {
     layout: Layout,
+    computed: {
+        uniqueCategories() {
+            const groupedCategories = this.categories.reduce(
+                (acc, category) => {
+                    if (!acc[category.slug]) {
+                        acc[category.slug] = [];
+                    }
+                    acc[category.slug].push(category);
+                    return acc;
+                },
+                {}
+            );
+
+            // Convert the object back to an array
+            return Object.values(groupedCategories);
+        },
+    },
 };
 </script>
 
@@ -66,7 +71,6 @@ export default {
             </template>
         </div>
     </div> -->
-
     <!-- Banner Section -->
     <div class="banner">
         <div class="container">
@@ -84,7 +88,7 @@ export default {
     <!--
       - CATEGORY
     -->
-
+    {{ takeStore.name }}
     <div class="category">
         <div class="container">
             <div class="category-item-container has-scrollbar">
@@ -122,10 +126,9 @@ export default {
 
                     <ul class="sidebar-menu-category-list">
                         <CategoryList
-                            v-for="(category, name) in categories"
+                            v-for="category in uniqueCategories"
+                            :key="category.id"
                             :content="category"
-                            :key="name"
-                            :name="name"
                         />
                     </ul>
                 </div>
