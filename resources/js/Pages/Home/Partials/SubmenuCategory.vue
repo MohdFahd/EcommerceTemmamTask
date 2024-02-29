@@ -16,10 +16,6 @@ export default {
             type: String,
             default: "",
         },
-        name: {
-            type: String,
-            default: "Shirts",
-        },
         value: {
             type: String,
             default: "33",
@@ -28,6 +24,13 @@ export default {
             type: Array,
             default: "",
         },
+    },
+    mounted() {
+        // Emit SubContent.name and SubContent.img to the parent component
+        this.$emit("slug-emitted", {
+            name: this.SubContent.name,
+            img: this.SubContent.img,
+        });
     },
 };
 </script>

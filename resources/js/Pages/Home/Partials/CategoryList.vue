@@ -7,6 +7,7 @@
         >
             <div class="menu-title-flex">
                 <Image :src="src" :alt="alt" :class="classes" />
+
                 <p class="menu-title">
                     {{ name }}
                 </p>
@@ -26,7 +27,7 @@
             <!-- props[href,name,value] -->
 
             <SubmenuCategory
-                v-for="item in content"
+                v-for="item in SubCategory"
                 :key="item.id"
                 :SubContent="item"
             />
@@ -54,9 +55,14 @@ export default {
         OpenList() {
             this.isActive = !this.isActive;
         },
+
+        handleSlugEmitted(slug) {
+            // Handle the emitted slug value here
+            console.log("Received slug:", slug);
+        },
     },
     props: {
-        content: {
+        SubCategory: {
             type: Array,
         },
         name: {
