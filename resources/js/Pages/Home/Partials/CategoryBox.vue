@@ -8,7 +8,7 @@
             <div class="category-content-flex">
                 <h3 class="category-item-title">{{ name }}</h3>
 
-                <p class="category-item-amount">(58)</p>
+                <p class="category-item-amount">({{ value }})</p>
             </div>
             <Button
                 text="Show all"
@@ -28,6 +28,7 @@ export default {
     props: {
         name: String,
         img: String,
+        value: String,
     },
 };
 </script>

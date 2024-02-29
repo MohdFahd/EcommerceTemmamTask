@@ -78,6 +78,7 @@ export default {
                     :key="category.id"
                     :name="category.name"
                     :img="category.img"
+                    :value="category.product_count"
                 />
             </div>
         </div>
@@ -135,9 +136,9 @@ export default {
           -->
 
                 <div class="product-minimal">
-                    <ProductShowcase name="New Arrival" :data="products" />
+                    <!-- <ProductShowcase name="New Arrival" :data="products" />
                     <ProductShowcase name="Trending" :data="products" />
-                    <ProductShowcase name="Top Rated" :data="products" />
+                    <ProductShowcase name="Top Rated" :data="products" /> -->
                     <!-- <div class="product-showcase">
                         <h2 class="title">New Arrivals</h2>
                         <div class="showcase-wrapper has-scrollbar">

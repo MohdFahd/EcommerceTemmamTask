@@ -13,6 +13,13 @@ class ProductController extends Controller
     {
         $products = Product::latest()->with('category')->get();
         $categories = Category::with('children')->whereNull('parent_id')->get();
+        $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
+        ->selectRaw('categories.id, COUNT(products.id) as product_count')
+        ->whereNull('categories.parent_id')
+        ->groupBy('categories.id')
+        ->get()
+        ->keyBy('id')
+        ->map->product_count;
         return Inertia::render('Home/Welcome', [
             'products' => $products->map(function ($product) {
                 return [
@@ -26,16 +33,17 @@ class ProductController extends Controller
                 ];
             }),
             // 'categories' => $categories,
-            'categories' => $categories->map(function ($category) {
+            'categories' => $categories->map(function ($category) use ($categoryProductCounts) {
             return [
                 'name' => $category->name,
                 'description' => $category->description,
                 'img' => $category->img,
-                'parent_id'=>$category->parent_id,
-                'children' => $category->children
+                'parent_id' => $category->parent_id,
+                'children' => $category->children,
+                'product_count' => $categoryProductCounts->get($category->id, 0)
             ];
         }),
-        ]);
-
+    ]);
     }
+
 }
