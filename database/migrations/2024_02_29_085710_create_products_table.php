@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->string('img');
-            $table->string('price');
+            $table->string('old_price');
+            $table->string('new_price');
             $table->string('quantity');
             $table->string('status');
             $table->timestamps();

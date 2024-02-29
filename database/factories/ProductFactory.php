@@ -22,7 +22,8 @@ class ProductFactory extends Factory
             'slug' => $this->faker->slug(),
             'description' => $this->faker->text(),
             'img' => $this->faker->imageUrl(),
-            'price' => $this->faker->numberBetween(100, 1000),
+            'new_price' => $this->faker->numberBetween(100, 1000),
+            'old_price' => $this->faker->numberBetween(100, 1000),
             'quantity' => $this->faker->numberBetween(1, 10),
             'status' => $this->faker->randomElement(['active', 'inactive']),
         ];

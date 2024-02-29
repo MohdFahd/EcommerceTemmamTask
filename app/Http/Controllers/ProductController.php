@@ -20,7 +20,8 @@ class ProductController extends Controller
                     'description' => $product->description,
                     'img' => $product->img,
                     'slug' => $product->slug,
-                    'price' => $product->price,
+                    'old_price' => $product->old_price,
+                    'new_price' => $product->new_price,
                     'category' => $product->category ? $product->category->name : null
                 ];
             }),
