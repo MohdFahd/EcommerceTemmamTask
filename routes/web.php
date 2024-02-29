@@ -20,6 +20,7 @@ use Inertia\Inertia;
 */
 // Route::get('/',[CategoryController::class,'show']);
 Route::get('/',[ProductController::class,'index']);
+Route::get('categories/{category:name}',[CategoryController::class,'show']);
 
 
 Route::get('/dashboard', function () {

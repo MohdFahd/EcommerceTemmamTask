@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Console\Application;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-    public function show()
+    public function show(Category $category)
     {
-        return Inertia::render('Home/Welcome', [
-        'categories' => Category::get()->map(function ($category) {
-            return [
-                'name' => $category->name,
-                'description' => $category->description,
-                'img' => $category->img,
-                'slug'=>$category->slug,
-            ];
-        }),
-    ]);
+        // Load products associated with the category
+        $category = $category->load('products');
+        // Pass the category with its products to the view
+        return Inertia::render('Product/index', [
+            'category' => $category
+        ]);
     }
 }

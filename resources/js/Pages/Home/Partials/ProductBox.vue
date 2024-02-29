@@ -24,9 +24,14 @@
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
             </div>
-            <a href="#" v-show="categoryLink" class="showcase-category"
-                >Clothes</a
-            >
+
+            <Button
+                v-show="categoryLink"
+                :text="content.category"
+                :href="'/categories/' + content.category"
+                classes="showcase-category"
+            />
+            <!-- <a href="#" class="showcase-category"></a> -->
 
             <div class="price-box">
                 <del>${{ content.old_price }}</del>
@@ -38,6 +43,7 @@
 
 <script setup>
 import Image from "@/Components/Image.vue";
+import Button from "@/Components/Button.vue";
 
 defineProps({
     content: { type: Object, required: true },

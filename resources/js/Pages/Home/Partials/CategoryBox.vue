@@ -10,7 +10,11 @@
 
                 <p class="category-item-amount">(58)</p>
             </div>
-            <Button text="Show all" href="/" classes="category-btn" />
+            <Button
+                text="Show all"
+                :href="/categories/ + name"
+                classes="category-btn"
+            />
         </div>
     </div>
 </template>
