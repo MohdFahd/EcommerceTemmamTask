@@ -9,8 +9,15 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function buyingOffers()
+    {
+        return $this->hasMany(BuyingOffer::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
+
 }

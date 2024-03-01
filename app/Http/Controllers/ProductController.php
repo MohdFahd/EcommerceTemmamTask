@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuyingOffer;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->with('category')->get();
+        $buyingOffers = BuyingOffer::latest()->with('product')->get();
         $categories = Category::with('children')->whereNull('parent_id')->get();
         $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
         ->selectRaw('categories.id, COUNT(products.id) as product_count')
@@ -34,15 +36,16 @@ class ProductController extends Controller
             }),
             // 'categories' => $categories,
             'categories' => $categories->map(function ($category) use ($categoryProductCounts) {
-            return [
-                'name' => $category->name,
-                'description' => $category->description,
-                'img' => $category->img,
-                'parent_id' => $category->parent_id,
-                'children' => $category->children,
-                'product_count' => $categoryProductCounts->get($category->id, 0)
-            ];
-        }),
+                return [
+                    'name' => $category->name,
+                    'description' => $category->description,
+                    'img' => $category->img,
+                    'parent_id' => $category->parent_id,
+                    'children' => $category->children,
+                    'product_count' => $categoryProductCounts->get($category->id, 0)
+                ];
+            }),
+            'buyingOffers' => $buyingOffers,
     ]);
     }
 

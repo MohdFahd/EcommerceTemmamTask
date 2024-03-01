@@ -5,6 +5,7 @@ import Banner from "../Home/Partials/Bnner.vue";
 import CategoryBox from "../Home/Partials/CategoryBox.vue";
 import CategoryList from "../Home/Partials/CategoryList.vue";
 import ProductShowcase from "../Home/Partials/ProductShowcase.vue";
+import BuyingOffer from "../Home/Partials/BuyingOffer.vue";
 import ProductBox from "../Home/Partials/ProductBox.vue";
 import { useTakeStore } from "@/Stores/TakeStore";
 import { computed } from "vue";
@@ -13,6 +14,7 @@ const { canLogin, canRegister, categories, products } = defineProps({
     // canRegister: Boolean,
     categories: { type: Object, required: true },
     products: { type: Object, required: true },
+    buyingOffers: { type: Array, required: true },
 });
 // const takeStore = useTakeStore();
 // takeStore.setCategories(categories);
@@ -136,30 +138,21 @@ export default {
           -->
 
                 <div class="product-minimal">
-                    <!-- <ProductShowcase name="New Arrival" :data="products" />
+                    <ProductShowcase name="New Arrival" :data="products" />
                     <ProductShowcase name="Trending" :data="products" />
-                    <ProductShowcase name="Top Rated" :data="products" /> -->
-                    <!-- <div class="product-showcase">
-                        <h2 class="title">New Arrivals</h2>
+                    <ProductShowcase name="Top Rated" :data="products" />
+
+                    <div class="product-featured">
+                        <h2 class="title">Deal of the day</h2>
+
                         <div class="showcase-wrapper has-scrollbar">
-                            <div class="showcase-container">
-                                <ProductBox
-                                    v-for="product in products"
-                                    :key="product.id"
-                                    :content="product"
-                                    :categoryLink="true"
-                                />
-                            </div>
-                            <div class="showcase-container">
-                                <ProductBox
-                                    v-for="product in products"
-                                    :key="product.id"
-                                    :content="product"
-                                    :categoryLink="true"
-                                />
-                            </div>
+                            <BuyingOffer
+                                v-for="data in buyingOffers"
+                                :key="data"
+                                :data="data"
+                            />
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <!--
