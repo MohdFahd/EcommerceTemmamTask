@@ -1,6 +1,6 @@
 <template>
     <div class="showcase">
-        <a href="#" class="showcase-img-box">
+        <a href="#" class="showcase-img-box" v-show="ShowImg">
             <Image
                 src="products/1.jpg"
                 alt="baby fabric shoes"
@@ -17,6 +17,13 @@
                 </h4>
             </a>
 
+            <Button
+                v-show="categoryLink"
+                :text="content.category"
+                :href="'/categories/' + content.category"
+                classes="showcase-category"
+            />
+
             <div class="showcase-rating" v-show="rating">
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
@@ -24,13 +31,6 @@
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
             </div>
-
-            <Button
-                v-show="categoryLink"
-                :text="content.category"
-                :href="'/categories/' + content.category"
-                classes="showcase-category"
-            />
             <!-- <a href="#" class="showcase-category"></a> -->
 
             <div class="price-box">
@@ -49,6 +49,7 @@ defineProps({
     content: { type: Object, required: true },
     rating: { type: Boolean, default: false },
     categoryLink: { type: Boolean, default: false },
+    ShowImg: { type: Boolean, default: true },
 });
 </script>
 

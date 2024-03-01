@@ -1,5 +1,5 @@
 <template>
-    <div class="showcase">
+    <div class="showcase" v-for="product in ProductData" :key="product.id">
         <div class="showcase-banner">
             <img
                 src="assets/images/products/jacket-3.jpg"
@@ -36,37 +36,20 @@
         </div>
 
         <ProductBox
-            v-for="product in chunk"
-            :key="product.id"
             :content="product"
             :categoryLink="true"
+            :rating="true"
+            :ShowImg="false"
         />
-
-        <div class="showcase-content">
-            <a href="#" class="showcase-category">jacket</a>
-
-            <a href="#">
-                <h3 class="showcase-title">Mens Winter Leathers Jackets</h3>
-            </a>
-
-            <div class="showcase-rating">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-            </div>
-
-            <div class="price-box">
-                <p class="price">$48.00</p>
-                <del>$75.00</del>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import ProductBox from "../Partials/ProductBox.vue";
+
+defineProps({
+    ProductData: { type: Object, required: true },
+});
 </script>
 
 <style></style>

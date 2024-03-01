@@ -123,12 +123,12 @@ export default {
                     <h3 class="showcase-heading">best sellers</h3>
                     <div class="showcase-wrapper">
                         <div class="showcase-container">
-                            <!-- <ProductBox
+                            <ProductBox
                                 v-for="product in products"
                                 :key="product.id"
                                 :content="product"
                                 :rating="true"
-                            /> -->
+                            />
                         </div>
                     </div>
                 </div>
@@ -355,7 +355,7 @@ export default {
                     <h2 class="title">New Products</h2>
 
                     <div class="product-grid">
-                        <GridShowcase />
+                        <GridShowcase :ProductData="products" />
                     </div>
                 </div>
             </div>
