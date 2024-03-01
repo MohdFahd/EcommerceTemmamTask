@@ -9,6 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function productimg()
+    {
+        return $this->hasMany(Product_image::class);
+    }
+
     public function buyingOffers()
     {
         return $this->hasMany(BuyingOffer::class);
@@ -18,6 +23,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
 
 
 }

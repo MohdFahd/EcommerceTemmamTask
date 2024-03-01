@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->with('category')->get();
+        $products = Product::latest()->with('category','productimg')->get();
         $buyingOffers = BuyingOffer::latest()->with('product')->get();
         $categories = Category::with('children')->whereNull('parent_id')->get();
         $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
@@ -31,7 +31,8 @@ class ProductController extends Controller
                     'slug' => $product->slug,
                     'old_price' => $product->old_price,
                     'new_price' => $product->new_price,
-                    'category' => $product->category ? $product->category->name : null
+                    'category' => $product->category ? $product->category->name : null,
+                    'productimg' => $product->productimg,
                 ];
             }),
             // 'categories' => $categories,
