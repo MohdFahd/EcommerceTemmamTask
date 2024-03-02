@@ -75,7 +75,8 @@
 
             <div class="header-user-actions">
                 <button class="action-btn">
-                    <ion-icon name="person-outline"></ion-icon>
+                    <icon />
+                    <!-- <ion-icon name="person-outline"></ion-icon> -->
                 </button>
 
                 <button class="action-btn">
@@ -617,8 +618,8 @@
     </nav>
 </template>
 
-<script>
-export default {};
+<script setup>
+import icon from "@/Components/icon.vue";
 </script>
 
 <style></style>

@@ -1,5 +1,16 @@
 <template>
-    <GridShowcase :ProductData="category.products" />
+    <div class="mx-10">
+        <div class="product-main">
+            <h2 class="title">New Products</h2>
+
+            <div class="product-grid">
+                <GridShowcase
+                    :ProductData="category.products"
+                    :category_name="category.name"
+                />
+            </div>
+        </div>
+    </div>
 </template>
 <script setup>
 import GridShowcase from "../Home/Partials/GridShowcase.vue";

@@ -6,7 +6,13 @@
             data-accordion-btn
         >
             <div class="menu-title-flex">
-                <Image :src="src" :alt="alt" :class="classes" />
+                <img
+                    src="assets/images/icons/coat.svg"
+                    alt="alt"
+                    width="30"
+                    height="30"
+                    class="menu-title-img"
+                />
 
                 <p class="menu-title">
                     {{ name }}

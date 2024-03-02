@@ -2,7 +2,7 @@
     <div class="showcase">
         <a href="#" class="showcase-img-box" v-show="ShowImg">
             <Image
-                src="products/1.jpg"
+                src="products/1"
                 alt="baby fabric shoes"
                 classes="showcase-img"
                 width="75"
@@ -19,7 +19,7 @@
 
             <Button
                 v-show="categoryLink"
-                :text="content.category"
+                :text="category_name"
                 :href="'/categories/' + content.category"
                 classes="showcase-category"
             />
@@ -50,7 +50,17 @@ defineProps({
     rating: { type: Boolean, default: false },
     categoryLink: { type: Boolean, default: false },
     ShowImg: { type: Boolean, default: true },
+    category_name: { type: String, default: true },
 });
+methods: {
+    // setCategory: {
+    //     if (category_name != "") {
+    //         this.category_name == category_name;
+    //     } else {
+    //         this.category_name = content.category;
+    //     }
+    // }
+}
 </script>
 
 <style></style>

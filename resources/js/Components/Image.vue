@@ -1,10 +1,11 @@
 <template>
     <img
-        :src="'/assets/images/' + src"
+        :src="'/assets/images/' + src + '.jpg'"
         :alt="alt"
         :width="width"
         :height="height"
         :class="classes"
+        loading="lazy"
     />
 </template>
 
