@@ -1,17 +1,18 @@
 <template>
     <div class="showcase" v-for="product in ProductData" :key="product.id">
+        <!-- {{ product }} -->
         <div class="showcase-banner">
-            <img
-                src="assets/images/products/jacket-3.jpg"
+            <Image
+                src="products/jacket-3.jpg"
                 alt="Mens Winter Leathers Jackets"
                 width="300"
-                class="product-img default"
+                classes="product-img default"
             />
-            <img
-                src="assets/images/products/jacket-4.jpg"
+            <Image
+                src="products/jacket-4.jpg"
                 alt="Mens Winter Leathers Jackets"
                 width="300"
-                class="product-img hover"
+                classes="product-img hover"
             />
 
             <p class="showcase-badge">15%</p>
@@ -46,6 +47,7 @@
 
 <script setup>
 import ProductBox from "../Partials/ProductBox.vue";
+import Image from "@/Components/Image.vue";
 
 defineProps({
     ProductData: { type: Object, required: true },

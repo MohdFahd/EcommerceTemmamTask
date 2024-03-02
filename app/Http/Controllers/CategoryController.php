@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         // Load products associated with the category
-        $category = $category->load('products');
+        $category = $category->load('products.productimg');
         // Pass the category with its products to the view
         return Inertia::render('Product/index', [
             'category' => $category

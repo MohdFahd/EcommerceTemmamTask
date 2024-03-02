@@ -53,7 +53,7 @@
         <div class="container">
             <a href="#" class="header-logo">
                 <img
-                    src="assets/images/logo/logo.svg"
+                    src="/assets/images/logo/logo.svg"
                     alt="Anon's logo"
                     width="120"
                     height="36"
@@ -130,7 +130,7 @@
                             <li class="panel-list-item">
                                 <a href="#">
                                     <img
-                                        src="assets/images/electronics-banner-1.jpg"
+                                        src="/assets/images/electronics-banner-1.jpg"
                                         alt="headphone collection"
                                         width="250"
                                         height="119"
@@ -167,7 +167,7 @@
                             <li class="panel-list-item">
                                 <a href="#">
                                     <img
-                                        src="assets/images/mens-banner.jpg"
+                                        src="/assets/images/mens-banner.jpg"
                                         alt="men's fashion"
                                         width="250"
                                         height="119"
@@ -204,7 +204,7 @@
                             <li class="panel-list-item">
                                 <a href="#">
                                     <img
-                                        src="assets/images/womens-banner.jpg"
+                                        src="/assets/images/womens-banner.jpg"
                                         alt="women's fashion"
                                         width="250"
                                         height="119"
@@ -241,7 +241,7 @@
                             <li class="panel-list-item">
                                 <a href="#">
                                     <img
-                                        src="assets/images/electronics-banner-2.jpg"
+                                        src="/assets/images/electronics-banner-2.jpg"
                                         alt="mouse collection"
                                         width="250"
                                         height="119"
