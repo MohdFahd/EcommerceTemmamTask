@@ -49,5 +49,13 @@ class ProductController extends Controller
             'buyingOffers' => $buyingOffers,
     ]);
     }
+    public function display(Product $product)
+    {
+        $product = $product->load('productimg');
+        // Pass the category with its products to the view
+        return Inertia::render('Product/product_details', [
+            'product' => $product
+        ]);
+    }
 
 }

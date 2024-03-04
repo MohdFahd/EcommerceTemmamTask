@@ -21,6 +21,7 @@ use Inertia\Inertia;
 // Route::get('/',[CategoryController::class,'show']);
 Route::get('/',[ProductController::class,'index']);
 Route::get('categories/{category:name}',[CategoryController::class,'show']);
+Route::get('products/{product:name}',[ProductController::class,'display']);
 
 
 Route::get('/dashboard', function () {

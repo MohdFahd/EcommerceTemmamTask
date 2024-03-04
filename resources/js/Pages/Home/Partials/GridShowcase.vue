@@ -24,9 +24,13 @@
                     <ion-icon name="heart-outline"></ion-icon>
                 </button>
 
-                <button class="btn-action">
-                    <ion-icon name="eye-outline"></ion-icon>
-                </button>
+                <Link
+                    class="btn-action"
+                    :href="'products/' + product.name"
+                    method="get"
+                    as="button"
+                    ><ion-icon name="eye-outline"></ion-icon
+                ></Link>
 
                 <button class="btn-action">
                     <ion-icon name="repeat-outline"></ion-icon>
@@ -49,8 +53,10 @@
 </template>
 
 <script setup>
+import Button from "@/Components/Button.vue";
 import ProductBox from "../Partials/ProductBox.vue";
 import Image from "@/Components/Image.vue";
+import { Link } from "@inertiajs/vue3";
 
 defineProps({
     ProductData: { type: Object, required: true },
