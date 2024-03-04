@@ -198,13 +198,33 @@
                             >
                                 <!-- button -->
                                 <!-- btn -->
-                                <button
+                                <form @submit.prevent="submit">
+                                    <input
+                                        type="hidden"
+                                        name="product_id"
+                                        value="product.id"
+                                        v-model="product.id"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="user_id"
+                                        value="1"
+                                    />
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary addtocart"
+                                    >
+                                        Add to cart
+                                    </button>
+                                </form>
+                                <!-- <button
                                     type="button"
                                     class="btn btn-primary addtocart"
                                     data-product-id="78"
+                                    @click="addToCart"
                                 >
                                     Add to cart
-                                </button>
+                                </button> -->
                             </div>
                             <div class="col-md-4 col-4">
                                 <!-- btn -->
@@ -321,12 +341,33 @@
 <script setup>
 import Layout from "../../Layouts/Layout.vue";
 import Image from "@/Components/Image.vue";
+import { useForm } from "@inertiajs/vue3";
+import { Inertia } from "@inertiajs/inertia"; // Import Inertia
 
 // Define props after the lifecycle hook
-defineProps({
+const { auth, product, categoryName } = defineProps({
     product: { type: Object, required: true },
     categoryName: { type: String, required: true },
+    auth: { type: Array, required: true },
 });
+let form = useForm({
+    user_id: auth.user.id,
+    product_id: product.id,
+});
+const submit = () => {
+    form.post("/favorites/create");
+};
+// const addToCart = () => {
+//     const userId = 1; // Replace with actual user ID
+//     const productId = 1; // Get product ID from data-product-id attribute
+
+//     console.log(userId, productId);
+//     // Send a POST request to Laravel route to add the product to the cart
+//     Inertia.post("/favorites/store", {
+//         user_id: userId,
+//         product_id: productId,
+//     });
+// };
 </script>
 
 <script>

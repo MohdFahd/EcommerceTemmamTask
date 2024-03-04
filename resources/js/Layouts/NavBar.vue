@@ -91,7 +91,7 @@
 
                 <button class="action-btn">
                     <ion-icon name="heart-outline"></ion-icon>
-                    <span class="count">0</span>
+                    <span class="count">{{ favCount }}</span>
                 </button>
 
                 <button class="action-btn">
@@ -638,6 +638,11 @@ import { Link } from "@inertiajs/vue3";
 </script>
 <script>
 export default {
+    props: {
+        favCount: {
+            type: String,
+        },
+    },
     computed: {
         isLogin() {
             return this.$page.props.isLogin;
