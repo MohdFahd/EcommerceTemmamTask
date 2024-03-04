@@ -86,8 +86,7 @@
 
             <div class="header-user-actions">
                 <button class="action-btn">
-                    <icon />
-                    <!-- <ion-icon name="person-outline"></ion-icon> -->
+                    <ion-icon :color="blue" name="person-outline"></ion-icon>
                 </button>
 
                 <button class="action-btn">
@@ -107,7 +106,9 @@
         <div class="container">
             <ul class="desktop-menu-category-list">
                 <li class="menu-category">
-                    <a href="#" class="menu-title">Home</a>
+                    <Link :href="route('home')" class="menu-title" method="get"
+                        >Home</Link
+                    >
                 </li>
 
                 <li class="menu-category">
@@ -400,7 +401,9 @@
 
         <ul class="mobile-menu-category-list">
             <li class="menu-category">
-                <a href="#" class="menu-title">Home</a>
+                <Link :href="route('home')" class="menu-title" method="get"
+                    >Home</Link
+                >
             </li>
 
             <li class="menu-category">
@@ -631,12 +634,7 @@
 
 <script setup>
 import { computed } from "vue";
-import icon from "@/Components/icon.vue";
 import { Link } from "@inertiajs/vue3";
-
-// const isLogin = computed(() => {
-//     return this.$page.props.auth.user.name;
-// });
 </script>
 <script>
 export default {

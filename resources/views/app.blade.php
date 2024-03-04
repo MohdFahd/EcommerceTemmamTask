@@ -20,7 +20,7 @@
             - custom css link
         -->
         <link rel="stylesheet" href="{{ asset('assets/css/style-prefix.css') }}">
-        <link rel="stylesheet" href="/assets/css/theme.min.css" />
+        {{-- <link rel="stylesheet" href="/assets/css/theme.min.css" /> --}}
 
         <!--
             - google font link
