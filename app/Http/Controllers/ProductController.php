@@ -6,6 +6,7 @@ use App\Models\BuyingOffer;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -33,6 +34,7 @@ class ProductController extends Controller
                     'new_price' => $product->new_price,
                     'category' => $product->category ? $product->category->name : null,
                     'productimg' => $product->productimg,
+
                 ];
             }),
             // 'categories' => $categories,
