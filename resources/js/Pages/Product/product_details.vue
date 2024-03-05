@@ -339,7 +339,7 @@
 </template>
 
 <script setup>
-import Layout from "../../Layouts/Layout.vue";
+import Layout from "../UserLayout/Layout.vue";
 import Image from "@/Components/Image.vue";
 import { useForm } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia"; // Import Inertia
@@ -352,8 +352,9 @@ const { auth, product, categoryName } = defineProps({
     categoryName: { type: String, required: true },
     auth: { type: Array, required: true },
 });
+
 let form = useForm({
-    user_id: auth.user.id,
+    user_id: 1,
     product_id: product.id,
 });
 const successMessage = ref("");

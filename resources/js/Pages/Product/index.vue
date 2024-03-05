@@ -14,7 +14,7 @@
 </template>
 <script setup>
 import GridShowcase from "../Home/Partials/GridShowcase.vue";
-import Layout from "../../Layouts/Layout.vue";
+import Layout from "../UserLayout/Layout.vue";
 
 defineProps({
     // ProductData: { type: Object, required: true },

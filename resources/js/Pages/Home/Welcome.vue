@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
-import Layout from "../../Layouts/Layout.vue";
+import Layout from "../UserLayout/Layout.vue";
 import Banner from "../Home/Partials/Bnner.vue";
 import CategoryBox from "../Home/Partials/CategoryBox.vue";
 import CategoryList from "../Home/Partials/CategoryList.vue";
