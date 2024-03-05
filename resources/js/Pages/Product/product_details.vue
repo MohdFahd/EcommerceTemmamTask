@@ -198,7 +198,7 @@
                             >
                                 <!-- button -->
                                 <!-- btn -->
-                                <form @submit.prevent="submit">
+                                <!-- <form @submit.prevent="submit">
                                     <input
                                         type="hidden"
                                         name="product_id"
@@ -216,15 +216,15 @@
                                     >
                                         Add to cart
                                     </button>
-                                </form>
-                                <!-- <button
+                                </form> -->
+                                <button
                                     type="button"
                                     class="btn btn-primary addtocart"
                                     data-product-id="78"
-                                    @click="addToCart"
+                                    @click="addToCart(product)"
                                 >
                                     Add to cart
-                                </button> -->
+                                </button>
                             </div>
                             <div class="col-md-4 col-4">
                                 <!-- btn -->
@@ -345,32 +345,55 @@ import { useForm } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia"; // Import Inertia
 import { ref } from "vue";
 import Swal from "sweetalert2";
+import { Link, router } from "@inertiajs/vue3";
 
 // Define props after the lifecycle hook
 const { auth, product, categoryName } = defineProps({
     product: { type: Object, required: true },
     categoryName: { type: String, required: true },
-    auth: { type: Array, required: true },
+    auth: { type: Object, required: true },
 });
-
-let form = useForm({
-    user_id: 1,
+const data = {
+    user_id: auth.user.id,
     product_id: product.id,
-});
-const successMessage = ref("");
-const submit = () => {
-    form.post("/favorites/create", {
-        preserveScroll: true,
-        onSuccess: () =>
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Your product has been saved",
-                showConfirmButton: false,
-                timer: 1500,
-            }),
+};
+const addToCart = (product) => {
+    console.log(product);
+    router.post("/favorites/create", data, {
+        onSuccess: (page) => {
+            console.log("Response from server:", page); // Log the response from the server
+            if (page.props.flash.message) {
+                console.log("Success message:", page.props.flash.message); // Log the success message
+                Swal.fire({
+                    toast: true,
+                    icon: "success",
+                    position: "top-end",
+                    showConfirmButton: false,
+                    title: page.props.flash.message,
+                });
+            }
+        },
     });
 };
+
+// let form = useForm({
+//     user_id: 1,
+//     product_id: product.id,
+// });
+// const successMessage = ref("");
+// const submit = () => {
+//     form.post("/favorites/create", {
+//         preserveScroll: true,
+//         onSuccess: () =>
+// Swal.fire({
+//     position: "top-end",
+//     icon: "success",
+//     title: "Your product has been saved",
+//     showConfirmButton: false,
+//     timer: 1500,
+// }),
+//     });
+// };
 </script>
 
 <script>
