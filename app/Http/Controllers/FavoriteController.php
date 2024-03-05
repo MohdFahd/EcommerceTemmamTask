@@ -17,7 +17,9 @@ class FavoriteController extends Controller
 
         ]);
         favorite::create($attributes);
-        return redirect()->back()->with('success', 'Product added to favorites');
+
+
+        return redirect()->back()->with('message', 'Favorite Added');
 
     }
 }

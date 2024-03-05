@@ -343,6 +343,8 @@ import Layout from "../../Layouts/Layout.vue";
 import Image from "@/Components/Image.vue";
 import { useForm } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia"; // Import Inertia
+import { ref } from "vue";
+import Swal from "sweetalert2";
 
 // Define props after the lifecycle hook
 const { auth, product, categoryName } = defineProps({
@@ -354,20 +356,20 @@ let form = useForm({
     user_id: auth.user.id,
     product_id: product.id,
 });
+const successMessage = ref("");
 const submit = () => {
-    form.post("/favorites/create");
+    form.post("/favorites/create", {
+        preserveScroll: true,
+        onSuccess: () =>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your product has been saved",
+                showConfirmButton: false,
+                timer: 1500,
+            }),
+    });
 };
-// const addToCart = () => {
-//     const userId = 1; // Replace with actual user ID
-//     const productId = 1; // Get product ID from data-product-id attribute
-
-//     console.log(userId, productId);
-//     // Send a POST request to Laravel route to add the product to the cart
-//     Inertia.post("/favorites/store", {
-//         user_id: userId,
-//         product_id: productId,
-//     });
-// };
 </script>
 
 <script>
