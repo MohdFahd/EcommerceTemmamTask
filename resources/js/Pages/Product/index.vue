@@ -4,10 +4,7 @@
             <h2 class="title">New Products</h2>
 
             <div class="product-grid">
-                <GridShowcase
-                    :ProductData="category.products"
-                    :category_name="category.name"
-                />
+                <GridShowcase :ProductData="products" />
             </div>
         </div>
     </div>
@@ -18,7 +15,7 @@ import Layout from "../UserLayout/Layout.vue";
 
 defineProps({
     // ProductData: { type: Object, required: true },
-    category: { type: Object, required: true },
+    products: { type: Object, required: true },
 });
 </script>
 

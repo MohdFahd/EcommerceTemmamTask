@@ -19,7 +19,7 @@
 
             <Button
                 v-show="categoryLink"
-                :text="category_name"
+                :text="content.category"
                 :href="'/categories/' + content.category"
                 classes="showcase-category"
             />

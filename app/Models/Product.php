@@ -9,6 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function cart()
+    {
+        return $this->hasMany(cart::class);
+    }
+
     public function productimg()
     {
         return $this->hasMany(Product_image::class);
@@ -28,6 +33,8 @@ class Product extends Model
     {
         return $this->hasMany(favorite::class);
     }
+
+
 
 
 }

@@ -23,10 +23,9 @@
                 <button class="btn-action">
                     <ion-icon name="heart-outline"></ion-icon>
                 </button>
-
                 <Link
                     class="btn-action"
-                    :href="'products/' + product.name"
+                    :href="'/products/' + product.name"
                     method="get"
                     as="button"
                     ><ion-icon name="eye-outline"></ion-icon
