@@ -20,6 +20,7 @@ class FavoriteController extends Controller
         favorite::create($attributes);
 
 
+
         return redirect()->back()->with('message', 'Favorite Added');
 
     }

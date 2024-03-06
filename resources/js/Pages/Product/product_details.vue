@@ -369,7 +369,7 @@ const addToCart = (product) => {
                     Swal.fire({
                         toast: true,
                         icon: "success",
-                        position: "bottom-start",
+                        position: "top-start",
                         showConfirmButton: false,
                         title: page.props.flash.message,
                     });

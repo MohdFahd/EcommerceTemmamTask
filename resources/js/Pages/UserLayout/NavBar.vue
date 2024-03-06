@@ -630,11 +630,17 @@
             </ul>
         </div>
     </nav>
+    <!-- <p v-if="favCount !== null">Favorite Count: {{ favCount }}</p> -->
 </template>
 
 <script setup>
 import { computed } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
+
+const favCount = computed(() => usePage().props.favUser.length);
+// const favCount = computed(() => {
+//     return usePage().props.favUser ? usePage.props.favUser.length : null;
+// });
 </script>
 <script>
 export default {
