@@ -353,27 +353,35 @@ const { auth, product, categoryName } = defineProps({
     categoryName: { type: String, required: true },
     auth: { type: Object, required: true },
 });
-const data = {
-    user_id: auth.user.id,
-    product_id: product.id,
-};
+
 const addToCart = (product) => {
     console.log(product);
-    router.post("/favorites/create", data, {
-        onSuccess: (page) => {
-            console.log("Response from server:", page); // Log the response from the server
-            if (page.props.flash.message) {
-                console.log("Success message:", page.props.flash.message); // Log the success message
-                Swal.fire({
-                    toast: true,
-                    icon: "success",
-                    position: "top-end",
-                    showConfirmButton: false,
-                    title: page.props.flash.message,
-                });
-            }
-        },
-    });
+    if (auth.user && auth.user.id) {
+        const data = {
+            user_id: auth.user.id,
+            product_id: product.id,
+        };
+        router.post("/favorites/create", data, {
+            onSuccess: (page) => {
+                console.log("Response from server:", page); // Log the response from the server
+                if (page.props.flash.message) {
+                    console.log("Success message:", page.props.flash.message); // Log the success message
+                    Swal.fire({
+                        toast: true,
+                        icon: "success",
+                        position: "bottom-start",
+                        showConfirmButton: false,
+                        title: page.props.flash.message,
+                    });
+                }
+            },
+        });
+    } else {
+        // Handle the case where the user is not logged in
+        router.get("/login");
+        console.log("User is not logged in");
+        // You might want to display a message to the user or redirect them to the login page
+    }
 };
 
 // let form = useForm({
