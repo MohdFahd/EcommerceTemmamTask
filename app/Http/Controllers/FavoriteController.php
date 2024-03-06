@@ -8,6 +8,13 @@ use Inertia\Inertia;
 
 class FavoriteController extends Controller
 {
+
+
+    public function index()
+    {
+
+        return Inertia::render('Favorites/index');
+    }
     public function create()
     {
         // dd(request()->all());

@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function favorites()
     {
-        return $this->hasMany(favorite::class)
+        return $this->hasMany(favorite::class);
     }
 
     public function cart()
