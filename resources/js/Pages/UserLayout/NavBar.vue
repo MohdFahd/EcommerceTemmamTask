@@ -89,7 +89,7 @@
                     <ion-icon :color="blue" name="person-outline"></ion-icon>
                 </button>
 
-                <Link href="/favorites">
+                <Link href="/favorites/">
                     <button class="action-btn">
                         <ion-icon name="heart-outline"></ion-icon>
                         <span class="count">{{ favCount }}</span>
@@ -639,11 +639,12 @@
 import { computed } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 
-const favCount = computed(() => usePage().props.favUser.length);
-// const favCount = computed(() => {
-//     return usePage().props.favUser ? usePage.props.favUser.length : null;
-// });
+const favCount = computed(() => {
+    const favUser = usePage().props.favUser;
+    return favUser ? favUser.length : 0; // Assuming you want to return 0 if favUser is null
+});
 </script>
+
 <script>
 export default {
     props: {

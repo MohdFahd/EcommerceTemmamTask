@@ -196,58 +196,22 @@
                             <div
                                 class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid"
                             >
-                                <!-- button -->
-                                <!-- btn -->
-                                <!-- <form @submit.prevent="submit">
-                                    <input
-                                        type="hidden"
-                                        name="product_id"
-                                        value="product.id"
-                                        v-model="product.id"
-                                    />
-                                    <input
-                                        type="hidden"
-                                        name="user_id"
-                                        value="1"
-                                    />
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary addtocart"
-                                    >
-                                        Add to cart
-                                    </button>
-                                </form> -->
                                 <button
                                     type="button"
                                     class="btn btn-primary addtocart"
                                     data-product-id="78"
-                                    @click="addToCart(product)"
+                                    @click="addToFav(product)"
                                 >
                                     Add to cart
                                 </button>
                             </div>
                             <div class="col-md-4 col-4">
-                                <!-- btn -->
-                                <a
-                                    class="btn btn-light"
-                                    href="#"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-html="true"
-                                    aria-label="Compare"
-                                >
-                                    <ion-icon
-                                        name="repeat-outline"
-                                        role="img"
-                                        class="md hydrated"
-                                        aria-label="repeat outline"
-                                    ></ion-icon>
-                                </a>
-                                <a
+                                <button
                                     class="btn btn-light btn-action"
-                                    href=""
                                     data-bs-toggle="tooltip"
                                     data-bs-html="true"
                                     aria-label="Wishlist"
+                                    @click="addToFav(product)"
                                 >
                                     <ion-icon
                                         name="heart-outline"
@@ -255,7 +219,7 @@
                                         class="md hydrated"
                                         aria-label="heart outline"
                                     ></ion-icon>
-                                </a>
+                                </button>
                             </div>
                         </div>
                         <!-- hr -->
@@ -341,7 +305,7 @@
 <script setup>
 import Layout from "../UserLayout/Layout.vue";
 import Image from "@/Components/Image.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia"; // Import Inertia
 import { ref } from "vue";
 import Swal from "sweetalert2";
@@ -354,7 +318,7 @@ const { auth, product, categoryName } = defineProps({
     auth: { type: Object, required: true },
 });
 
-const addToCart = (product) => {
+const addToFav = (product) => {
     console.log(product);
     if (auth.user && auth.user.id) {
         const data = {
@@ -383,25 +347,6 @@ const addToCart = (product) => {
         // You might want to display a message to the user or redirect them to the login page
     }
 };
-
-// let form = useForm({
-//     user_id: 1,
-//     product_id: product.id,
-// });
-// const successMessage = ref("");
-// const submit = () => {
-//     form.post("/favorites/create", {
-//         preserveScroll: true,
-//         onSuccess: () =>
-// Swal.fire({
-//     position: "top-end",
-//     icon: "success",
-//     title: "Your product has been saved",
-//     showConfirmButton: false,
-//     timer: 1500,
-// }),
-//     });
-// };
 </script>
 
 <script>

@@ -26,6 +26,7 @@ class ProductController extends Controller
         return Inertia::render('Home/Welcome', [
             'products' => $products->map(function ($product) {
                 return [
+                    'id' => $product->id,
                     'name' => $product->name,
                     'description' => $product->description,
                     'img' => $product->img,

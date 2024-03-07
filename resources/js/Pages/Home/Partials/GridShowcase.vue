@@ -20,7 +20,11 @@
             </p>
 
             <div class="showcase-actions">
-                <button class="btn-action">
+                <button
+                    class="btn-action bg-black"
+                    :disabled="isProgress"
+                    @click="addToFav(product)"
+                >
                     <ion-icon name="heart-outline"></ion-icon>
                 </button>
                 <Link
@@ -55,12 +59,98 @@
 import Button from "@/Components/Button.vue";
 import ProductBox from "../Partials/ProductBox.vue";
 import Image from "@/Components/Image.vue";
-import { Link } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+import { Link, router, usePage } from "@inertiajs/vue3";
+import { Inertia } from "@inertiajs/inertia";
+import { ref, computed } from "vue";
 
-defineProps({
+const { ProductData, category_name } = defineProps({
     ProductData: { type: Object, required: true },
     category_name: { type: String, required: true },
 });
+const auth = usePage().props.auth;
+const isProgress = ref(false); // Define isProgress as a reactive reference
+const addToFav = (product) => {
+    console.log(product);
+    if (auth.user && auth.user.id) {
+        const data = {
+            user_id: auth.user.id,
+            product_id: product.id,
+        };
+
+        // Check if the product is already in the favorites
+        const favId = checkIfProductInFavorites(auth.user.id, product.id);
+
+        // If the product is already in the favorites, delete it
+        if (favId) {
+            console.log("Product already in favorites:", product.id);
+            router.delete(
+                route("fav.destroy", favId, {
+                    onSuccess: (page) => {
+                        console.log("Response from server:", page);
+                        if (page.props.flash.message) {
+                            console.log(
+                                "Success message:",
+                                page.props.flash.message
+                            );
+                            Swal.fire({
+                                toast: true,
+                                icon: "success",
+                                position: "top-start",
+                                showConfirmButton: false,
+                                title: page.props.flash.message,
+                            });
+                        }
+                    },
+                })
+            );
+        } else {
+            console.log("Product not in favorites:", product.id);
+            // If the product is not in the favorites, add it
+            router.post("/favorites/create", data, {
+                onSuccess: (page) => {
+                    console.log("Response from server:", page);
+                    if (page.props.flash.message) {
+                        console.log(
+                            "Success message:",
+                            page.props.flash.message
+                        );
+                        Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-start",
+                            showConfirmButton: false,
+                            title: page.props.flash.message,
+                        });
+                    }
+                },
+                preserveScroll: true,
+            });
+        }
+    } else {
+        // Handle the case where the user is not logged in
+        router.get("/login");
+        console.log("User is not logged in");
+        // You might want to display a message to the user or redirect them to the login page
+    }
+};
+// const favUser = usePage().props.favUser;
+
+const favUser = computed(() => {
+    return usePage().props.favUser;
+});
+const checkIfProductInFavorites = (userId, productId) => {
+    let favoriteId = null; // Initialize with null, indicating no match found
+
+    favUser.value.forEach((fav) => {
+        if (fav.user_id === userId && fav.product_id === productId) {
+            favoriteId = fav.id; // Set the favoriteId to the ID of the matching item
+        }
+    });
+
+    console.log(favoriteId !== null); // Log whether a match was found
+    return favoriteId; // Return the favorite ID, or null if no match found
+};
 </script>
 
 <style></style>
