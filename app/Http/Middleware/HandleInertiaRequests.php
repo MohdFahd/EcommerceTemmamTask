@@ -49,6 +49,13 @@ class HandleInertiaRequests extends Middleware
                 }else{
                     return null;
                 }
+            },
+            'cartUser'=> function(){
+                if(Auth::check()){
+                    return Auth::user()->cart;
+                }else{
+                    return null;
+                }
             }
         ];
     }

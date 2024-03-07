@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProductController;
@@ -33,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/favorites',[FavoriteController::class,'index']);
     Route::post('/favorites/create',[FavoriteController::class,'create'])->name('fav.create');
     Route::delete('favorites/{id}', [FavoriteController::class,'destroy'])->name('fav.destroy');
+
+    Route::get('/carts',[CartController::class,'index']);
+    Route::post('/carts/create',[CartController::class,'create'])->name('cart.create');
+    Route::delete('carts/{id}', [CartController::class,'destroy'])->name('cart.destroy');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

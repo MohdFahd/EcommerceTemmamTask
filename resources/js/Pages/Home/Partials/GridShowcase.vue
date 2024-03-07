@@ -39,7 +39,11 @@
                     <ion-icon name="repeat-outline"></ion-icon>
                 </button>
 
-                <button class="btn-action">
+                <button
+                    class="btn-action"
+                    @click="addToCart(product)"
+                    :disabled="isProgress"
+                >
                     <ion-icon name="bag-add-outline"></ion-icon>
                 </button>
             </div>
@@ -79,12 +83,12 @@ const addToFav = (product) => {
         };
 
         // Check if the product is already in the favorites
-        const favId = checkIfProductInFavorites(auth.user.id, product.id);
+        const cartId = checkIfProductInFavorites(auth.user.id, product.id);
 
         // If the product is already in the favorites, delete it
-        if (favId) {
+        if (cartId) {
             console.log("Product already in favorites:", product.id);
-            router.delete(`/favorites/${favId}`, {
+            router.delete(`/favorites/${cartId}`, {
                 onSuccess: (page) => {
                     if (page.props.flash.message) {
                         Swal.fire({
@@ -132,69 +136,6 @@ const addToFav = (product) => {
         // You might want to display a message to the user or redirect them to the login page
     }
 };
-// const addToCart = (product) => {
-//     console.log(product);
-//     isProgress.value = true;
-//     if (auth.user && auth.user.id) {
-//         const data = {
-//             user_id: auth.user.id,
-//             product_id: product.id,
-//         };
-
-//         // Check if the product is already in the favorites
-//         const favId = checkIfProductInFavorites(auth.user.id, product.id);
-
-//         // If the product is already in the favorites, delete it
-//         if (favId) {
-//             console.log("Product already in favorites:", product.id);
-//             router.delete(`/favorites/${favId}`, {
-//                 onSuccess: (page) => {
-//                     if (page.props.flash.message) {
-//                         Swal.fire({
-//                             toast: true,
-//                             icon: "success",
-//                             position: "top-start",
-//                             showConfirmButton: false,
-//                             title: page.props.flash.message,
-//                             timer: 1000, // Adjust the duration (in milliseconds) as needed
-//                         });
-//                     }
-//                     isProgress.value = false;
-//                 },
-//                 preserveScroll: true,
-//             });
-//         } else {
-//             console.log("Product not in favorites:", product.id);
-//             // If the product is not in the favorites, add it
-//             router.post("/favorites/create", data, {
-//                 onSuccess: (page) => {
-//                     console.log("Response from server:", page);
-//                     if (page.props.flash.message) {
-//                         console.log(
-//                             "Success message:",
-//                             page.props.flash.message
-//                         );
-//                         Swal.fire({
-//                             toast: true,
-//                             icon: "success",
-//                             position: "top-start",
-//                             showConfirmButton: false,
-//                             title: page.props.flash.message,
-//                             timer: 2000,
-//                         });
-//                         isProgress.value = false;
-//                     }
-//                 },
-//                 preserveScroll: true,
-//             });
-//         }
-//     } else {
-//         // Handle the case where the user is not logged in
-//         router.get("/login");
-//         console.log("User is not logged in");
-//         // You might want to display a message to the user or redirect them to the login page
-//     }
-// };
 // const favUser = usePage().props.favUser;
 
 const favUser = computed(() => {
@@ -211,6 +152,85 @@ const checkIfProductInFavorites = (userId, productId) => {
 
     console.log(favoriteId !== null); // Log whether a match was found
     return favoriteId; // Return the favorite ID, or null if no match found
+};
+// this function for user cart
+//////////////////////////////////////
+const addToCart = (product) => {
+    isProgress.value = true;
+    if (auth.user && auth.user.id) {
+        const data = {
+            user_id: auth.user.id,
+            product_id: product.id,
+            quantity: 1,
+        };
+
+        // Check if the product is already in the favorites
+        const cartId = checkIfProductInCart(auth.user.id, product.id);
+
+        // If the product is already in the favorites, delete it
+        if (cartId) {
+            console.log("Product already in favorites:", product.id);
+            router.delete(`/carts/${cartId}`, {
+                onSuccess: (page) => {
+                    if (page.props.flash.message) {
+                        Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-start",
+                            showConfirmButton: false,
+                            title: page.props.flash.message,
+                            timer: 1000, // Adjust the duration (in milliseconds) as needed
+                        });
+                    }
+                    isProgress.value = false;
+                },
+                preserveScroll: true,
+            });
+        } else {
+            // If the product is not in the favorites, add it
+            router.post("/carts/create", data, {
+                onSuccess: (page) => {
+                    if (page.props.flash.message) {
+                        console.log(
+                            "Success message:",
+                            page.props.flash.message
+                        );
+                        Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-start",
+                            showConfirmButton: false,
+                            title: page.props.flash.message,
+                            timer: 2000,
+                        });
+                        isProgress.value = false;
+                    }
+                },
+                preserveScroll: true,
+            });
+        }
+    } else {
+        // Handle the case where the user is not logged in
+        router.get("/login");
+        console.log("User is not logged in");
+        // You might want to display a message to the user or redirect them to the login page
+    }
+};
+const cartUser = computed(() => {
+    return usePage().props.cartUser;
+});
+
+const checkIfProductInCart = (userId, productId) => {
+    let cartId = null; // Initialize with null, indicating no match found
+
+    cartUser.value.forEach((cart) => {
+        if (cart.user_id === userId && cart.product_id === productId) {
+            cartId = cart.id; // Set the cart to the ID of the matching item
+        }
+    });
+
+    console.log(cartId !== null); // Log whether a match was found
+    return cartId; // Return the favorite ID, or null if no match found
 };
 </script>
 
