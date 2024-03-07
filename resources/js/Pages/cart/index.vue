@@ -1,6 +1,6 @@
 <template>
     <section class="mb-lg-14 mb-8 mt-8">
-        <div class="container">
+        <div class="container" v-if="carts.length != 0">
             <!-- row -->
             <div class="row">
                 <div class="col-12">
@@ -18,7 +18,10 @@
                 <div class="col-lg-8 col-md-7">
                     <div class="py-3">
                         <!-- alert -->
-                        <div class="alert alert-danger p-2 d-flex" role="alert">
+                        <div
+                            class="alert alert-danger p-2 d-flex bg-black"
+                            role="alert"
+                        >
                             You’ve got FREE delivery. Start
                             <a href="#!" class="alert-link mx-1">
                                 checkout now!</a
@@ -68,6 +71,7 @@
                                         <!-- text -->
                                         <div class="mt-2 small lh-1">
                                             <button
+                                                @click="removeCart(cart.id)"
                                                 class="text-decoration-none text-inherit removeiteam"
                                                 data-product-id="78"
                                             >
@@ -105,7 +109,7 @@
                                                             y2="17"
                                                         ></line></svg></span
                                                 ><span class="text-muted"
-                                                    >Remove</span
+                                                    >Remove {{ cart.id }}</span
                                                 >
                                             </button>
                                         </div>
@@ -152,8 +156,8 @@
                         </ul>
                         <!-- btn -->
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="#!" class="btn btn-primary"
-                                >Continue Shopping</a
+                            <Link href="/" class="btn btn-primary">
+                                Continue Shopping</Link
                             >
                             <button
                                 type="submit"
@@ -182,7 +186,7 @@
                                         <div class="me-auto">
                                             <div>Item Subtotal</div>
                                         </div>
-                                        <span>$48.00</span>
+                                        <span>${{ ItemSubtotal }}</span>
                                     </li>
 
                                     <!-- list group item -->
@@ -192,7 +196,7 @@
                                         <div class="me-auto">
                                             <div>Discount</div>
                                         </div>
-                                        <span>$19.00</span>
+                                        <span>${{ ItemDiscount }}</span>
                                     </li>
                                     <!-- list group item -->
                                     <li
@@ -201,7 +205,9 @@
                                         <div class="me-auto">
                                             <div class="fw-bold">Subtotal</div>
                                         </div>
-                                        <span class="fw-bold">$29.00</span>
+                                        <span class="fw-bold"
+                                            >${{ Subtotal }}</span
+                                        >
                                     </li>
                                 </ul>
                             </div>
@@ -214,7 +220,9 @@
                                     type="submit"
                                 >
                                     Go to Checkout
-                                    <span class="fw-bold">$29.00</span></a
+                                    <span class="fw-bold"
+                                        >${{ ItemSubtotal }}</span
+                                    ></a
                                 >
                             </div>
                             <!-- text -->
@@ -266,24 +274,76 @@
                 </div>
             </div>
         </div>
+        <div v-else>
+            <h1 class="fw-bold text-center">No areavialbe carts</h1>
+        </div>
     </section>
 </template>
 
 <script setup>
+import { computed, ref, watch } from "vue";
 import Layout from "../UserLayout/Layout.vue";
 import Image from "@/Components/Image.vue";
+import { Link, router, usePage } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
 
 const { carts } = defineProps({
-    // ProductData: { type: Object, required: true },
     carts: { type: Object, required: true },
 });
+
+const ItemSubtotal = computed(() =>
+    carts.reduce((total, item) => (total + item.old_price) * item.quantity, 0)
+);
+const ItemDiscount = computed(() =>
+    carts.reduce(
+        (total, item) =>
+            (total += item.old_price - item.new_price) * item.quantity,
+        0
+    )
+);
+const Subtotal = computed(() =>
+    carts.reduce((total, item) => (total += item.new_price) * item.quantity, 0)
+);
+
+const total = computed(() =>
+    carts.reduce((acc, item) => acc + item.new_price * item.quantity, 0)
+);
+
+const removeCart = (cartId) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(`/carts/${cartId}`, {
+                onSuccess: (page) => {
+                    if (page.props.flash.message) {
+                        Swal.fire(
+                            "Deleted!",
+                            page.props.flash.message,
+                            "success"
+                        );
+                    }
+                },
+                preserveScroll: true,
+                preserveState: false,
+            });
+        }
+    });
+};
 </script>
+
 <script>
 export default {
     layout: Layout,
 };
 </script>
 
-<style scoped>
+<style>
 @import url("../../../../public/assets/css/theme.min.css");
 </style>

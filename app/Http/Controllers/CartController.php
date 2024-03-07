@@ -58,8 +58,7 @@ class CartController extends Controller
 
     public function destroy($id)
     {
-        // dd($id);
         $cart = cart::find($id)->delete();
-
+        return redirect()->back()->with('message', 'Your cart item has been deleted.');
     }
 }
