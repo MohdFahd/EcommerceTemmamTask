@@ -95,11 +95,12 @@
                         <span class="count">{{ favCount }}</span>
                     </button>
                 </Link>
-
-                <button class="action-btn">
-                    <ion-icon name="bag-handle-outline"></ion-icon>
-                    <span class="count">{{ cartUser }}</span>
-                </button>
+                <Link href="/carts/">
+                    <button class="action-btn">
+                        <ion-icon name="bag-handle-outline"></ion-icon>
+                        <span class="count">{{ cartUser }}</span>
+                    </button>
+                </Link>
             </div>
         </div>
     </div>
@@ -640,12 +641,11 @@ import { computed } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 
 const favCount = computed(() => {
-    const favUser = usePage().props.favUser;
-    return favUser ? favUser.length : 0; // Assuming you want to return 0 if favUser is null
+    return usePage().props.favUser ?? 0;
+    // Assuming you want to return 0 if favUser is null
 });
 const cartUser = computed(() => {
-    const cartUser = usePage().props.cartUser;
-    return cartUser ? cartUser.length : 0; // Assuming you want to return 0 if favUser is null
+    return usePage().props.cartUser ?? 0; // If favUser is null or undefined, set the default value to 0
 });
 </script>
 

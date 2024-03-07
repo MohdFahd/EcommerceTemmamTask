@@ -45,14 +45,14 @@ class HandleInertiaRequests extends Middleware
             ],
             'favUser'=> function(){
                 if(Auth::check()){
-                    return Auth::user()->favorites;
+                    return Auth::user()->favorites->count();
                 }else{
                     return null;
                 }
             },
             'cartUser'=> function(){
                 if(Auth::check()){
-                    return Auth::user()->cart;
+                    return Auth::user()->cart->count();
                 }else{
                     return null;
                 }

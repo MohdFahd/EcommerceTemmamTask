@@ -33,7 +33,6 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/favorites',[FavoriteController::class,'index']);
     Route::post('/favorites/create',[FavoriteController::class,'create'])->name('fav.create');
-    Route::delete('favorites/{id}', [FavoriteController::class,'destroy'])->name('fav.destroy');
 
     Route::get('/carts',[CartController::class,'index']);
     Route::post('/carts/create',[CartController::class,'create'])->name('cart.create');

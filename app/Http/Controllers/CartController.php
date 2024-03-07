@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
+use App\Models\favorite;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,9 +11,27 @@ class CartController extends Controller
 {
 
     public function index()
-    {
-        return Inertia::render('cart/index');
-    }
+{
+    $userId = auth()->id(); // Assuming you are using authentication
+
+    $carts = Cart::where('user_id', $userId)
+                 ->get()
+                 ->map(function ($cart) {
+                     return [
+                         'id' => $cart->id,
+                         'product_id' => $cart->product_id,
+                         'user_id' => $cart->user_id,
+                         'quantity' => $cart->quantity,
+                         'name' => $cart->product->name,
+                         'img' => $cart->product->img,
+                         'new_price' => $cart->product->new_price,
+                         'old_price' => $cart->product->old_price,
+                     ];
+                 });
+
+    return Inertia::render('cart/index', compact('carts'));
+}
+
     public function create()
     {
         // dd(request()->all());
@@ -22,10 +41,21 @@ class CartController extends Controller
             'quantity' => ['required'],
         ]);
 
-        cart::create($attributes);
-        return redirect()->back()->with('message', 'cart Added');
+        $existingCart = Cart::where('product_id', $attributes['product_id'])
+                                    ->where('user_id', $attributes['user_id'])
+                                    ->first();
+        if ($existingCart === null) {
+            // Cart doesn't exist, so create a new one
+            Cart::create($attributes);
+            return redirect()->back()->with('message', 'Cart Added');
+        } else {
 
+            // Cart already exists, so delete it
+            $existingCart->delete();
+            return redirect()->back()->with('message', 'Cart Removed');
+        }
     }
+
     public function destroy($id)
     {
         // dd($id);
