@@ -28,8 +28,8 @@ class FavoriteController extends Controller
     }
     public function destroy($id)
     {
-
-        $favorite = favorite::find($id)->delete()->with;
+        // dd($id);
+        $favorite = favorite::find($id)->delete();
         // return redirect()->back()->with('message', 'Favorite Deleted');
 
     }

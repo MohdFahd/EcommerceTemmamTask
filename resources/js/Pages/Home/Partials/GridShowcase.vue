@@ -72,6 +72,7 @@ const auth = usePage().props.auth;
 const isProgress = ref(false); // Define isProgress as a reactive reference
 const addToFav = (product) => {
     console.log(product);
+    isProgress.value = true;
     if (auth.user && auth.user.id) {
         const data = {
             user_id: auth.user.id,
@@ -84,26 +85,22 @@ const addToFav = (product) => {
         // If the product is already in the favorites, delete it
         if (favId) {
             console.log("Product already in favorites:", product.id);
-            router.delete(
-                route("fav.destroy", favId, {
-                    onSuccess: (page) => {
-                        console.log("Response from server:", page);
-                        if (page.props.flash.message) {
-                            console.log(
-                                "Success message:",
-                                page.props.flash.message
-                            );
-                            Swal.fire({
-                                toast: true,
-                                icon: "success",
-                                position: "top-start",
-                                showConfirmButton: false,
-                                title: page.props.flash.message,
-                            });
-                        }
-                    },
-                })
-            );
+            router.delete(`/favorites/${favId}`, {
+                onSuccess: (page) => {
+                    if (page.props.flash.message) {
+                        Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-start",
+                            showConfirmButton: false,
+                            title: page.props.flash.message,
+                            timer: 1000, // Adjust the duration (in milliseconds) as needed
+                        });
+                    }
+                    isProgress.value = false;
+                },
+                preserveScroll: true,
+            });
         } else {
             console.log("Product not in favorites:", product.id);
             // If the product is not in the favorites, add it
@@ -121,7 +118,9 @@ const addToFav = (product) => {
                             position: "top-start",
                             showConfirmButton: false,
                             title: page.props.flash.message,
+                            timer: 2000,
                         });
+                        isProgress.value = false;
                     }
                 },
                 preserveScroll: true,
