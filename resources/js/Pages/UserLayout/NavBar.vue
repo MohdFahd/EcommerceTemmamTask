@@ -380,12 +380,12 @@
         <button class="action-btn">
             <ion-icon name="home-outline"></ion-icon>
         </button>
-
-        <button class="action-btn">
-            <ion-icon name="heart-outline"></ion-icon>
-
-            <span class="count">0</span>
-        </button>
+        <Link href="/favorites/">
+            <button class="action-btn">
+                <ion-icon name="heart-outline"></ion-icon>
+                <span class="count">{{ favCount }}</span>
+            </button>
+        </Link>
 
         <button class="action-btn" data-mobile-menu-open-btn>
             <ion-icon name="grid-outline"></ion-icon>

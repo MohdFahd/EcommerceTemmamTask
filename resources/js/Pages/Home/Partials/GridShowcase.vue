@@ -71,7 +71,6 @@ const { ProductData, category_name } = defineProps({
 const auth = usePage().props.auth;
 const isProgress = ref(false); // Define isProgress as a reactive reference
 const addToFav = (product) => {
-    console.log(product);
     isProgress.value = true;
     if (auth.user && auth.user.id) {
         const data = {
@@ -133,6 +132,69 @@ const addToFav = (product) => {
         // You might want to display a message to the user or redirect them to the login page
     }
 };
+// const addToCart = (product) => {
+//     console.log(product);
+//     isProgress.value = true;
+//     if (auth.user && auth.user.id) {
+//         const data = {
+//             user_id: auth.user.id,
+//             product_id: product.id,
+//         };
+
+//         // Check if the product is already in the favorites
+//         const favId = checkIfProductInFavorites(auth.user.id, product.id);
+
+//         // If the product is already in the favorites, delete it
+//         if (favId) {
+//             console.log("Product already in favorites:", product.id);
+//             router.delete(`/favorites/${favId}`, {
+//                 onSuccess: (page) => {
+//                     if (page.props.flash.message) {
+//                         Swal.fire({
+//                             toast: true,
+//                             icon: "success",
+//                             position: "top-start",
+//                             showConfirmButton: false,
+//                             title: page.props.flash.message,
+//                             timer: 1000, // Adjust the duration (in milliseconds) as needed
+//                         });
+//                     }
+//                     isProgress.value = false;
+//                 },
+//                 preserveScroll: true,
+//             });
+//         } else {
+//             console.log("Product not in favorites:", product.id);
+//             // If the product is not in the favorites, add it
+//             router.post("/favorites/create", data, {
+//                 onSuccess: (page) => {
+//                     console.log("Response from server:", page);
+//                     if (page.props.flash.message) {
+//                         console.log(
+//                             "Success message:",
+//                             page.props.flash.message
+//                         );
+//                         Swal.fire({
+//                             toast: true,
+//                             icon: "success",
+//                             position: "top-start",
+//                             showConfirmButton: false,
+//                             title: page.props.flash.message,
+//                             timer: 2000,
+//                         });
+//                         isProgress.value = false;
+//                     }
+//                 },
+//                 preserveScroll: true,
+//             });
+//         }
+//     } else {
+//         // Handle the case where the user is not logged in
+//         router.get("/login");
+//         console.log("User is not logged in");
+//         // You might want to display a message to the user or redirect them to the login page
+//     }
+// };
 // const favUser = usePage().props.favUser;
 
 const favUser = computed(() => {
