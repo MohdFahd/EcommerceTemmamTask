@@ -221,7 +221,7 @@
                                 >
                                     Go to Checkout
                                     <span class="fw-bold"
-                                        >${{ ItemSubtotal }}</span
+                                        >${{ Subtotal }}</span
                                     ></a
                                 >
                             </div>
