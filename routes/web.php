@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\cart;
 use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/favorites/create',[FavoriteController::class,'create'])->name('fav.create');
 
     Route::get('/carts',[CartController::class,'index']);
+    Route::post('/carts/update',[CartController::class,'update'])->name('cart.update');
     Route::post('/carts/create',[CartController::class,'create'])->name('cart.create');
     Route::delete('carts/{id}', [CartController::class,'destroy'])->name('cart.destroy');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

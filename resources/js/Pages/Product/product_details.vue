@@ -171,7 +171,7 @@
                                     type="button"
                                     value="-"
                                     class="button-minus btn btn-sm"
-                                    @click="decreaseQuantity"
+                                    @click="quantity > 1 ? quantity-- : null"
                                 />
                                 <input
                                     type="number"
@@ -186,7 +186,7 @@
                                     type="button"
                                     value="+"
                                     class="button-plus btn btn-sm"
-                                    @click="increaseQuantity"
+                                    @click="quantity < 10 ? quantity++ : null"
                                 />
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                                     type="button"
                                     class="btn btn-primary addtocart"
                                     data-product-id="78"
-                                    @click="addToFav(product)"
+                                    @click="addToCart(product)"
                                 >
                                     Add to cart
                                 </button>
@@ -211,6 +211,7 @@
                                     data-bs-toggle="tooltip"
                                     data-bs-html="true"
                                     aria-label="Wishlist"
+                                    :disabled="isProgress"
                                     @click="addToFav(product)"
                                 >
                                     <ion-icon
@@ -310,6 +311,7 @@ import { Inertia } from "@inertiajs/inertia"; // Import Inertia
 import { ref } from "vue";
 import Swal from "sweetalert2";
 import { Link, router } from "@inertiajs/vue3";
+import { data } from "autoprefixer";
 
 // Define props after the lifecycle hook
 const { auth, product, categoryName } = defineProps({
@@ -318,27 +320,67 @@ const { auth, product, categoryName } = defineProps({
     auth: { type: Object, required: true },
 });
 
+const isProgress = ref(false); // Define isProgress as a reactive reference
 const addToFav = (product) => {
-    console.log(product);
+    isProgress.value = true;
     if (auth.user && auth.user.id) {
         const data = {
             user_id: auth.user.id,
             product_id: product.id,
         };
+        // Check if the product is already in the favorites
         router.post("/favorites/create", data, {
             onSuccess: (page) => {
-                console.log("Response from server:", page); // Log the response from the server
+                console.log("Response from server:", page);
                 if (page.props.flash.message) {
-                    console.log("Success message:", page.props.flash.message); // Log the success message
+                    console.log("Success message:", page.props.flash.message);
                     Swal.fire({
                         toast: true,
                         icon: "success",
                         position: "top-start",
                         showConfirmButton: false,
                         title: page.props.flash.message,
+                        timer: 2000,
                     });
+                    isProgress.value = false;
                 }
             },
+            preserveScroll: true,
+        });
+    } else {
+        // Handle the case where the user is not logged in
+        router.get("/login");
+        console.log("User is not logged in");
+        // You might want to display a message to the user or redirect them to the login page
+    }
+};
+const quantity = ref(1);
+const addToCart = (product) => {
+    isProgress.value = true;
+    if (auth.user && auth.user.id) {
+        const data = {
+            user_id: auth.user.id,
+            product_id: product.id,
+            quantity: quantity.value,
+        };
+
+        // If the product is already in the favorites, delete it
+        router.post("/carts/create", data, {
+            onSuccess: (page) => {
+                if (page.props.flash.message) {
+                    console.log("Success message:", page.props.flash.message);
+                    Swal.fire({
+                        toast: true,
+                        icon: "success",
+                        position: "top-start",
+                        showConfirmButton: false,
+                        title: page.props.flash.message,
+                        timer: 2000,
+                    });
+                    isProgress.value = false;
+                }
+            },
+            preserveScroll: true,
         });
     } else {
         // Handle the case where the user is not logged in

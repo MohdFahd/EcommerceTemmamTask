@@ -117,29 +117,35 @@
                                     <!-- input group -->
                                     <div class="col-4 col-md-3 col-lg-3">
                                         <!-- input -->
-                                        <div
-                                            class="input-group input-spinner d-flex"
-                                        >
+                                        <div class="input-group input-spinner">
                                             <input
                                                 type="button"
                                                 value="-"
                                                 class="button-minus btn btn-sm"
-                                                data-field="quantity"
+                                                @click="
+                                                    quantity[cart.id] > 1
+                                                        ? quantity[cart.id]--
+                                                        : null
+                                                "
                                             />
                                             <input
                                                 type="number"
                                                 step="1"
-                                                id="qty"
-                                                max="20"
-                                                value="1"
+                                                max="10"
+                                                min="1"
+                                                v-model="quantity[cart.id]"
                                                 name="quantity"
-                                                class="quantity-field form-control-sm form-input"
+                                                class="quantity-field form-control-sm form-input qty"
                                             />
                                             <input
                                                 type="button"
                                                 value="+"
                                                 class="button-plus btn btn-sm"
-                                                data-field="quantity"
+                                                @click="
+                                                    quantity[cart.id] < 10
+                                                        ? quantity[cart.id]++
+                                                        : null
+                                                "
                                             />
                                         </div>
                                     </div>
@@ -160,11 +166,14 @@
                                 Continue Shopping</Link
                             >
                             <button
+                                @click="updateCart(quantity)"
                                 type="submit"
                                 class="btn btn-dark Update_Cart"
+                                :disabled="isProgress"
                             >
                                 Update Cart
                             </button>
+                            {{ data }}
                         </div>
                     </div>
                 </div>
@@ -287,26 +296,39 @@ import Image from "@/Components/Image.vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 
+// quantity
 const { carts } = defineProps({
     carts: { type: Object, required: true },
 });
+// Define your data properties
+const quantity = ref({}); // Use an object instead of an array to store quantities by cart id
+const defaultQuantity = 1; // Set default quantity
 
+// Initialize quantity with default values for each cart item
+carts.forEach((cart) => {
+    quantity.value[cart.id] = cart.quantity;
+});
+// Define your computed property to calculate the subtotal
 const ItemSubtotal = computed(() =>
-    carts.reduce((total, item) => (total + item.old_price) * item.quantity, 0)
+    carts.reduce(
+        (total, item) => total + item.old_price * quantity.value[item.id] || 0,
+        0
+    )
 );
 const ItemDiscount = computed(() =>
     carts.reduce(
         (total, item) =>
-            (total += item.old_price - item.new_price) * item.quantity,
+            (total += item.old_price - item.new_price) *
+                quantity.value[item.id] || 0,
         0
     )
 );
 const Subtotal = computed(() =>
-    carts.reduce((total, item) => (total += item.new_price) * item.quantity, 0)
-);
-
-const total = computed(() =>
-    carts.reduce((acc, item) => acc + item.new_price * item.quantity, 0)
+    carts.reduce(
+        (total, item) =>
+            (total += item.new_price) * quantity.value[item.id] || 0,
+        0
+    )
 );
 
 const removeCart = (cartId) => {
@@ -336,6 +358,40 @@ const removeCart = (cartId) => {
         }
     });
 };
+// JavaScript
+const isProgress = ref(false); // Define isProgress as a reactive reference
+
+const updateCart = () => {
+    isProgress.value = true;
+
+    const data = Object.entries(quantity.value).reduce((acc, [cartId, qty]) => {
+        acc[cartId] = qty;
+        return acc;
+    }, {});
+
+    router.post(`/carts/update`, data, {
+        onSuccess: (page) => {
+            if (page.props.flash.message) {
+                Swal.fire("Updated!", page.props.flash.message, "success");
+                isProgress.value = false;
+            }
+        },
+        preserveScroll: true,
+        preserveState: false,
+    });
+};
+
+// const updateCart = (quantity) => {
+//     router.post(`/carts/update/${quantity}`, {
+//         onSuccess: (page) => {
+//             if (page.props.flash.message) {
+//                 Swal.fire("Deleted!", page.props.flash.message, "success");
+//             }
+//         },
+//         preserveScroll: true,
+//         preserveState: false,
+//     });
+// };
 </script>
 
 <script>

@@ -11,27 +11,26 @@ class CartController extends Controller
 {
 
     public function index()
-{
-    $userId = auth()->id(); // Assuming you are using authentication
+    {
+        $userId = auth()->id(); // Assuming you are using authentication
 
-    $carts = Cart::where('user_id', $userId)
-                 ->get()
-                 ->map(function ($cart) {
-                     return [
-                         'id' => $cart->id,
-                         'product_id' => $cart->product_id,
-                         'user_id' => $cart->user_id,
-                         'quantity' => $cart->quantity,
-                         'name' => $cart->product->name,
-                         'img' => $cart->product->img,
-                         'new_price' => $cart->product->new_price,
-                         'old_price' => $cart->product->old_price,
-                     ];
-                 });
+        $carts = Cart::where('user_id', $userId)
+                    ->get()
+                    ->map(function ($cart) {
+                        return [
+                            'id' => $cart->id,
+                            'product_id' => $cart->product_id,
+                            'user_id' => $cart->user_id,
+                            'quantity' => $cart->quantity,
+                            'name' => $cart->product->name,
+                            'img' => $cart->product->img,
+                            'new_price' => $cart->product->new_price,
+                            'old_price' => $cart->product->old_price,
+                        ];
+                    });
 
-    return Inertia::render('cart/index', compact('carts'));
-}
-
+        return Inertia::render('cart/index', compact('carts'));
+    }
     public function create()
     {
         // dd(request()->all());
@@ -56,9 +55,31 @@ class CartController extends Controller
         }
     }
 
+   public function update(Request $request)
+    {
+        // Retrieve the updated quantities data from the request
+        $updatedQuantities = $request->all();
+
+        // Loop through each updated quantity
+        foreach ($updatedQuantities as $cartId => $quantity) {
+            // Find the cart item by its ID
+            $cartItem = Cart::find($cartId);
+            if ($cartItem) {
+                // Update the quantity of the cart item
+                $cartItem->quantity = $quantity;
+                $cartItem->save();
+            }
+        }
+
+        // Optionally, you can return a response indicating success
+        return redirect()->back()->with('message', 'Your cart item has been updated.');
+    }
+
+
     public function destroy($id)
     {
         $cart = cart::find($id)->delete();
         return redirect()->back()->with('message', 'Your cart item has been deleted.');
     }
+
 }

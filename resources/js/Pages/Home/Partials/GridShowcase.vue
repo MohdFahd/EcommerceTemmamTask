@@ -143,22 +143,6 @@ const addToCart = (product) => {
         // You might want to display a message to the user or redirect them to the login page
     }
 };
-const cartUser = computed(() => {
-    return usePage().props.cartUser;
-});
-
-const checkIfProductInCart = (userId, productId) => {
-    let cartId = null; // Initialize with null, indicating no match found
-
-    cartUser.value.forEach((cart) => {
-        if (cart.user_id === userId && cart.product_id === productId) {
-            cartId = cart.id; // Set the cart to the ID of the matching item
-        }
-    });
-
-    console.log(cartId !== null); // Log whether a match was found
-    return cartId; // Return the favorite ID, or null if no match found
-};
 </script>
 
 <style></style>
