@@ -173,7 +173,6 @@
                             >
                                 Update Cart
                             </button>
-                            {{ data }}
                         </div>
                     </div>
                 </div>
@@ -223,16 +222,14 @@
                             <div class="d-grid mb-1 mt-4">
                                 <a href=""></a>
                                 <!-- btn -->
-                                <a
-                                    href="checkOut.php?total=29"
+
+                                <Link
+                                    href="/checkOut"
                                     class="btn btn-primary btn-lg d-flex justify-content-between align-items-center"
-                                    type="submit"
                                 >
                                     Go to Checkout
-                                    <span class="fw-bold"
-                                        >${{ Subtotal }}</span
-                                    ></a
-                                >
+                                    <span class="fw-bold">${{ Subtotal }}</span>
+                                </Link>
                             </div>
                             <!-- text -->
                             <p>

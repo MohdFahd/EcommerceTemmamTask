@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/carts/update',[CartController::class,'update'])->name('cart.update');
     Route::post('/carts/create',[CartController::class,'create'])->name('cart.create');
     Route::delete('carts/{id}', [CartController::class,'destroy'])->name('cart.destroy');
+
+    Route::get('/checkOut',[CheckoutController::class,'index']);
+    Route::post('/checkOut/store',[CheckoutController::class,'store']);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
