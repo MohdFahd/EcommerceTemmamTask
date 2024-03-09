@@ -254,6 +254,7 @@
 import Image from "@/Components/Image.vue";
 import { useForm } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
+import layout from "../UserLayout/Layout.vue";
 
 const { carts } = defineProps({
     carts: { type: Object, required: true },
@@ -295,6 +296,11 @@ let form = useForm({
 });
 </script>
 
+<script>
+export default {
+    layout: layout,
+};
+</script>
 <style scope>
 @import url("../../../../public/assets/css/theme.min.css");
 </style>

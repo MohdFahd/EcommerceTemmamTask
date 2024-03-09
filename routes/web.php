@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -28,9 +29,18 @@ Route::get('/',[ProductController::class,'index'])->name('home');
 Route::get('categories/{category:name}',[CategoryController::class,'show']);
 Route::get('products/{product:name}',[ProductController::class,'display']);
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+
+//     // Route::get('/dashboard', function () { return Inertia::render('Dashboard');});
+//     Route::get('/users', function () { return Inertia::render('Dashboard');});
+
+
+// });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/favorites',[FavoriteController::class,'index']);
@@ -51,6 +61,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware('auth','role:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
 });
 
 require __DIR__.'/auth.php';

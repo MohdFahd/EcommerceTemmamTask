@@ -22,6 +22,8 @@ class Role
             return Redirect::route('home');
         }
 
+
+
         return $next($request);
     }
 }
