@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoeryContoller;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
@@ -62,6 +63,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth','role:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/admin/categories', [CategoeryContoller::class, 'index'])->name('admin.categories');
+    Route::get('/admin/categories/create', [CategoeryContoller::class, 'create'])->name('admin.categories.create');
 });
 
 require __DIR__.'/auth.php';
