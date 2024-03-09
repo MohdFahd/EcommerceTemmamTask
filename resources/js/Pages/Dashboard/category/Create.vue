@@ -27,7 +27,6 @@
                                     >
                                         <input
                                             type="text"
-                                            required=""
                                             v-model="form.name"
                                             name="name"
                                             class="form-control"
@@ -35,6 +34,12 @@
                                             placeholder="Enter The Name Of Category"
                                         />
                                         <label for="floatingInput">Name</label>
+
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.name"
+                                            v-text="form.errors.name"
+                                        ></span>
                                     </div>
                                     <div
                                         class="form-floating mb-3 col-lg-6 col-md-6"
@@ -64,6 +69,11 @@
                                         cols="97"
                                         rows="5"
                                     ></textarea>
+                                    <span
+                                        class="text-danger"
+                                        v-if="form.errors.description"
+                                        v-text="form.errors.description"
+                                    ></span>
                                 </div>
                                 <div
                                     class="form-floating mb-3 col-lg-12 col-md-12 p-3"
@@ -74,6 +84,11 @@
                                         type="file"
                                         class="form-control"
                                     />
+                                    <span
+                                        class="text-danger"
+                                        v-if="form.errors.img"
+                                        v-text="form.errors.img"
+                                    ></span>
                                 </div>
 
                                 <button

@@ -49,11 +49,12 @@ class CategoeryContoller extends Controller
         $attributes = request()->validate([
             'name' => ['required','string','max:255'],
             'description' => ['required','string','max:255'],
-            // 'img' => ['required|image'],
+            'img' => ['required'],
         ]);
-
         $filename = $image->getClientOriginalName();
-        $path = $image->storeAs('/assets/images/icons', $filename);
+        $image->move(public_path('/assets/images/icons'), $filename);
+        $path = "/assets/images/icons/" . $filename;
+
 
         Category::create([
             'name' => $request->name,

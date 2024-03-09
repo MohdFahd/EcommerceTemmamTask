@@ -60,7 +60,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div>
                                                     <img
-                                                        src="/Admin/assets/img/team-2.jpg"
+                                                        :src="category.img"
                                                         class="avatar avatar-sm me-3"
                                                         alt="user1"
                                                     />
