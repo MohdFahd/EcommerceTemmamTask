@@ -17,8 +17,7 @@
 
                     <div class="card-body px-0 pt-0 pb-2">
                         <form
-                            action="config/code.php"
-                            method="post"
+                            @submit.prevent="submit"
                             enctype="multipart/form-data"
                         >
                             <div class="card-body px-0 pt-0 pb-2">
@@ -29,6 +28,7 @@
                                         <input
                                             type="text"
                                             required=""
+                                            v-model="form.name"
                                             name="name"
                                             class="form-control"
                                             id="floatingInput"
@@ -41,12 +41,15 @@
                                     >
                                         <input
                                             type="text"
-                                            name="slug"
+                                            name="Parent"
+                                            v-model="form.parent"
                                             class="form-control"
                                             id="floatingInput"
                                             placeholder="name@example.com"
                                         />
-                                        <label for="floatingInput">Slug</label>
+                                        <label for="floatingInput"
+                                            >parent</label
+                                        >
                                     </div>
                                 </div>
                                 <div
@@ -55,6 +58,7 @@
                                     <textarea
                                         name="description"
                                         class="p-2"
+                                        v-model="form.description"
                                         id=""
                                         placeholder="Enter The Description"
                                         cols="97"
@@ -66,44 +70,12 @@
                                 >
                                     <input
                                         name="img"
+                                        @change="handleFileInputChange"
                                         type="file"
                                         class="form-control"
                                     />
                                 </div>
-                                <div class="row px-3 mt-3 mx-2">
-                                    <div
-                                        class="form-check form-switch ps-0 col-md-6"
-                                    >
-                                        <input
-                                            class="form-check-input ms-auto"
-                                            name="status"
-                                            type="checkbox"
-                                            id="flexSwitchCheckDefault"
-                                            checked=""
-                                        />
-                                        <label
-                                            class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault"
-                                            >Status</label
-                                        >
-                                    </div>
-                                    <div
-                                        class="form-check form-switch ps-0 col-md-6"
-                                    >
-                                        <input
-                                            class="form-check-input ms-auto"
-                                            name="popular"
-                                            type="checkbox"
-                                            id="flexSwitchCheckDefault"
-                                            checked=""
-                                        />
-                                        <label
-                                            class="form-check-label text-body ms-3 text-truncate w-80 mb-0"
-                                            for="flexSwitchCheckDefault"
-                                            >Popular</label
-                                        >
-                                    </div>
-                                </div>
+
                                 <button
                                     type="submit"
                                     name="AddCategory"
@@ -122,6 +94,38 @@
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+
+let form = useForm({
+    name: "",
+    parent: "",
+    description: "",
+    img: null,
+});
+const handleFileInputChange = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    form.img = file; // Update the form.img property with the selected file object
+};
+const submit = () => {
+    form.post("/admin/categories/store", {
+        preserveState: true,
+        onSuccess: (page) => showAlert(page),
+        onError: () => passwordInput.value.focus(),
+        onFinish: () => form.reset(),
+    });
+};
+const showAlert = (page) => {
+    Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-start",
+        showConfirmButton: false,
+        title: page.props.flash.message,
+        timer: 2000,
+    });
+    form.reset();
+};
 </script>
 <script>
 import layout from "../../AdminLayout/layout.vue";

@@ -40,4 +40,28 @@ class CategoeryContoller extends Controller
 
         return Inertia::render('Dashboard/category/Create');
     }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $image = $request->file('img');
+
+        $attributes = request()->validate([
+            'name' => ['required','string','max:255'],
+            'description' => ['required','string','max:255'],
+            // 'img' => ['required|image'],
+        ]);
+
+        $filename = $image->getClientOriginalName();
+        $path = $image->storeAs('/assets/images/icons', $filename);
+
+        Category::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'img' => $path,
+        ]);
+
+
+        return redirect()->route('admin.categories.create')->with('message', 'Category created successfully');
+    }
 }

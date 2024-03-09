@@ -65,6 +65,7 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
     Route::get('/admin/categories', [CategoeryContoller::class, 'index'])->name('admin.categories');
     Route::get('/admin/categories/create', [CategoeryContoller::class, 'create'])->name('admin.categories.create');
+    Route::post('/admin/categories/store', [CategoeryContoller::class, 'store'])->name('admin.categories.store');
 });
 
 require __DIR__.'/auth.php';
