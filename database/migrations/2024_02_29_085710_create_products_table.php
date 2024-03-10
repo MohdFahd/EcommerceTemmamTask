@@ -22,7 +22,7 @@ return new class extends Migration
             $table->double('old_price');
             $table->double('new_price');
             $table->integer('quantity');
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }
