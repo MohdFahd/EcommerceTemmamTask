@@ -98,24 +98,27 @@
                                             >
                                         </td>
                                         <td class="align-middle">
-                                            <a
-                                                href="javascript:;"
+                                            <Link
+                                                :href="
+                                                    '/admin/categories/edit/' +
+                                                    category.id
+                                                "
                                                 class="text-secondary font-weight-bold text-xs"
-                                                data-toggle="tooltip"
-                                                data-original-title="Edit user"
                                             >
                                                 Edit
-                                            </a>
+                                            </Link>
                                         </td>
                                         <td class="align-middle">
-                                            <a
-                                                href="javascript:;"
+                                            <button
                                                 class="text-secondary font-weight-bold text-xs"
+                                                @click="
+                                                    removeCategory(category.id)
+                                                "
                                                 data-toggle="tooltip"
                                                 data-original-title="Edit user"
                                             >
                                                 Delete
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -205,15 +208,43 @@
 </template>
 
 <script setup>
+import Swal from "sweetalert2";
 const { categories } = defineProps({
     // ProductData: { type: Object, required: true },
     categories: { type: Object, required: true },
     filters: { type: Object, required: true },
 });
+const removeCategory = (catId) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete(`/admin/categories/${catId}`, {
+                onSuccess: (page) => {
+                    if (page.props.flash.message) {
+                        Swal.fire(
+                            "Deleted!",
+                            page.props.flash.message,
+                            "success"
+                        );
+                    }
+                },
+                preserveScroll: true,
+                preserveState: false,
+            });
+        }
+    });
+};
 </script>
 <script>
 import layout from "../AdminLayout/layout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 export default {
     layout: layout,

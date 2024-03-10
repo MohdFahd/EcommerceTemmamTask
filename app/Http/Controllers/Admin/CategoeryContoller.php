@@ -65,4 +65,49 @@ class CategoeryContoller extends Controller
 
         return redirect()->route('admin.categories.create')->with('message', 'Category created successfully');
     }
+
+    public function edit(Category $category)
+    {
+        // dd($category);
+        return Inertia::render('Dashboard/category/edit', [
+            'category' => $category,
+        ]);
+    }
+    public function update(Request $request, Category $category)
+    {
+
+        dd($request->all());
+        $attributes = request()->validate([
+            'name' => ['required','string','max:255'],
+            'description' => ['required','string'],
+            // 'img' => ['required'],
+        ]);
+        $image = $request->file('img');
+        // check if the img is uploaded or not
+        if ($image) {
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('/assets/images/icons'), $filename);
+            $path = "/assets/images/icons/". $filename;
+            $category->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'img' => $path,
+            ]);
+        } else {
+            $category->update([
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+        }
+        return redirect()->route('admin.categories.edit', $category->id)->with('message', 'Category updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $category = Category::find($id);
+        //delete the img from public
+        unlink(public_path($category->img));
+        $category->delete();
+        return redirect()->back()->with('message', 'Category deleted successfully');
+    }
 }
