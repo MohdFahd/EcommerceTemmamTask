@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address');
             $table->string('city');
-            $table->string('zip');
-            $table->string('BusinessName');
+            $table->string('zip')->nullable();
+            $table->string('BusinessName')->nullable();
             $table->string('trackingId')->unique(true)->nullable(); // for external services like
-            $table->string('tracking_mode'); // for external services like
-            $table->string('status'); // for external services like
+            $table->string('tracking_mode')->default('pending'); // for external services like
+            $table->string('status')->default('pending'); // for external services like
             $table->string('payment_mode')->nullable();
             $table->string('total'); // for external services like
             $table->timestamps();

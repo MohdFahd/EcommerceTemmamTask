@@ -252,7 +252,7 @@
 
 <script setup>
 import Image from "@/Components/Image.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { computed, ref, watch } from "vue";
 import layout from "../UserLayout/Layout.vue";
 
@@ -292,7 +292,9 @@ let form = useForm({
     phone: "",
     zip: "",
     BusinessName: "",
-    ItemSubtotal: ItemSubtotal,
+    total: ItemSubtotal,
+    carts: carts,
+    user_id: usePage().props.auth.user.id,
 });
 </script>
 
