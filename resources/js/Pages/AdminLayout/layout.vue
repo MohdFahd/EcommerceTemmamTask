@@ -29,7 +29,7 @@
                     <h6 class="font-weight-bolder mb-0">Dashboard</h6>
                 </nav>
                 <div
-                    class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+                    class="navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
                     id="navbar"
                 >
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -56,10 +56,33 @@
                         <li class="nav-item d-flex align-items-center">
                             <a
                                 href="javascript:;"
-                                class="nav-link text-body font-weight-bold px-0"
+                                class="nav-link text-body font-weight-bold px-0 d-flex justify-center items-center"
                             >
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
+                                <i class="fa fa-user me-sm-1">
+                                    <svg
+                                        width="15px"
+                                        class="svg-inline--fa fa-user me-sm-1"
+                                        aria-hidden="true"
+                                        focusable="false"
+                                        data-prefix="fas"
+                                        data-icon="user"
+                                        role="img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 448 512"
+                                        data-fa-i2svg=""
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+                                        ></path>
+                                    </svg>
+                                </i>
+                                <Link
+                                    :href="route('logout')"
+                                    class="d-sm-inline d-none"
+                                    method="post"
+                                    >Sign Out</Link
+                                >
                             </a>
                         </li>
                         <li
@@ -259,4 +282,5 @@
 
 <script setup>
 import Navbar from "../AdminLayout/Navbar.vue";
+import { Link } from "@inertiajs/vue3";
 </script>

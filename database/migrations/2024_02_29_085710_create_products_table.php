@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->text('description');
-            $table->string('img');
-
-            $table->double('old_price');
+            $table->string('img')->nullable();
+            $table->double('old_price')->nullable();
             $table->double('new_price');
             $table->integer('quantity');
             $table->integer('status');

@@ -51,6 +51,7 @@ class CategoeryContoller extends Controller
             'description' => ['required','string','max:255'],
             'img' => ['required'],
         ]);
+
         $filename = $image->getClientOriginalName();
         $image->move(public_path('/assets/images/icons'), $filename);
         $path = "/assets/images/icons/" . $filename;

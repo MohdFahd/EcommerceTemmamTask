@@ -82,7 +82,9 @@
                 <Link
                     href="/admin/users"
                     class="nav-link"
-                    :class="{ active: $page.component == 'Dashboard/users' }"
+                    :class="{
+                        active: $page.url.startsWith('/admin/users'),
+                    }"
                 >
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
@@ -135,7 +137,9 @@
                 <Link
                     href="/admin/categories"
                     class="nav-link"
-                    :class="{ active: $page.component == 'Dashboard/category' }"
+                    :class="{
+                        active: $page.url.startsWith('/admin/categories'),
+                    }"
                 >
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
@@ -189,7 +193,7 @@
                     href="/admin/products"
                     class="nav-link"
                     :class="{
-                        active: $page.component == 'Dashboard/products/index',
+                        active: $page.url.startsWith('/admin/products'),
                     }"
                 >
                     <div

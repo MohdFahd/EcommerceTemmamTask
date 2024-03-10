@@ -55,33 +55,43 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+
         $request->validate([
             'name' => ['required','string','max:255'],
             'description' => ['required','string','max:255'],
             'category_id' => ['required', 'exists:categories,id'],
+            'old_price' => ['required', 'numeric'],
             'new_price' => ['required', 'numeric'],
-            // 'img' => ['required', 'image'],
             'quantity' => ['required', 'numeric'],
-            'status' => ['required', 'numeric'],
+            'status' => ['required'],
+            // 'img' => ['required', 'image'],
         ]);
+        // dd($attributes);
 
-        $product = Product::create([
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('/assets/images/products'), $filename);
+            $path = "/assets/images/products/" . $filename;
+        } else {
+            // Handle the case when no file is uploaded
+            // For example, set a default value for $path
+            $path = "/assets/images/products/bag.svg";
+        }
+        Product::create([
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $request->category_id,
+            'old_price' => $request->old_price,
             'new_price' => $request->new_price,
-            'img' => $request->img,
             'quantity' => $request->quantity,
-          'status' => $request->status,
+            'status' => $request->status,
+            'img'=>$path
         ]);
-        $image = $request->file('img');
-        $filename = $image->getClientOriginalName();
-        $image->move(public_path('/assets/images/products'), $filename);
-        $path = "/assets/images/products/" . $filename;
-        $product->update([
-            'img' => $path,
-        ]);
-        return redirect()->route('admin.products.create')->with('message', 'Product created successfully');
+
+
+        return redirect()->route('products.create')->with('message', 'Product created successfully');
     }
 
     /**
@@ -97,8 +107,10 @@ class AdminProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $categories = Category::get(['id', 'name']);
         return Inertia::render('Dashboard/products/edit', [
             'product' => $product,
+            'categories' => $categories,
         ]);
     }
 
@@ -107,7 +119,44 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       $request->validate([
+            'name' => ['required','string','max:255'],
+            'description' => ['required','string','max:255'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'old_price' => ['required', 'numeric'],
+            'new_price' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric'],
+            'status' => ['required'],
+            // 'img' => ['required', 'image'],
+        ]);
+        $Product = Product::find($id);
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('/assets/images/products'), $filename);
+            $path = "/assets/images/products/" . $filename;
+            $Product->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'old_price' => $request->old_price,
+                'new_price' => $request->new_price,
+                'quantity' => $request->quantity,
+                'status' => $request->status,
+                'img'=>$path
+            ]);
+        } else {
+            $Product->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'old_price' => $request->old_price,
+                'new_price' => $request->new_price,
+                'quantity' => $request->quantity,
+                'status' => $request->status,
+            ]);
+        }
+        return redirect()->route('products.index', $id)->with('message', 'Product updated successfully');
     }
 
     /**

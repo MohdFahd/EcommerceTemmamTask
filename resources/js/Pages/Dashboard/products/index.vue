@@ -112,9 +112,7 @@
                                         >
                                             <span
                                                 class="badge badge-sm bg-gradient-success"
-                                                v-if="
-                                                    product.status == 'active'
-                                                "
+                                                v-if="product.status == 1"
                                             >
                                                 active
                                             </span>

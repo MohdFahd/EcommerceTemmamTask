@@ -49,7 +49,7 @@
                                             aria-label="Default select example"
                                             aria-placeholder="sdadasd"
                                             require=""
-                                            v-model="form.cat_id"
+                                            v-model="form.category_id"
                                         >
                                             <option selected value="">
                                                 Select one of the Category
@@ -62,6 +62,11 @@
                                                 {{ category.name }}
                                             </option>
                                         </select>
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.category_id"
+                                            v-text="form.errors.category_id"
+                                        ></span>
                                     </div>
                                 </div>
                                 <div
@@ -135,6 +140,11 @@
                                         <label for="floatingInput"
                                             >New Price
                                         </label>
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.new_price"
+                                            v-text="form.errors.new_price"
+                                        ></span>
                                     </div>
                                     <div
                                         class="form-floating mb-3 col-lg-6 col-md-6"
@@ -151,6 +161,11 @@
                                         <label for="floatingInput"
                                             >Quantity
                                         </label>
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.quantity"
+                                            v-text="form.errors.quantity"
+                                        ></span>
                                     </div>
                                 </div>
                                 <div class="row px-3 mt-3 mx-2">
@@ -170,12 +185,18 @@
                                             for="flexSwitchCheckDefault"
                                             >Status</label
                                         >
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.status"
+                                            v-text="form.errors.status"
+                                        ></span>
                                     </div>
                                 </div>
                                 <button
                                     type="submit"
                                     name="AddCategory"
                                     class="btn btn-primary m-3"
+                                    :disabled="form.processing"
                                 >
                                     Add Product
                                 </button>
@@ -205,7 +226,7 @@ let form = useForm({
     new_price: "",
     quantity: "",
     status: true,
-    cat_id: "",
+    category_id: "",
 });
 const handleFileInputChange = (event) => {
     const file = event.target.files[0]; // Get the selected file
@@ -214,6 +235,7 @@ const handleFileInputChange = (event) => {
 const submit = () => {
     form.post(route("products.store"), {
         preserveState: true,
+        preserveScroll: true,
         onSuccess: (page) => showAlert(page),
         // onError: () => passwordInput.value.focus(),
         onFinish: () => form.reset(),
