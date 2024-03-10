@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/show', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/MyOrders', [ProfileController::class, 'ShowOrder'])->name('profile.ShowOrder');
+    Route::get('/profile/MyOrders/{order}', [ProfileController::class, 'ShowOrderItem'])->name('profile.ShowOrderItem');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

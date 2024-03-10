@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('zip')->nullable();
             $table->string('BusinessName')->nullable();
             $table->string('trackingId')->unique(true)->nullable(); // for external services like
-            $table->string('tracking_mode')->default('pending'); // for external services like
+            $table->integer('tracking_mode')->default(0); // for external services like
             $table->string('status')->default('pending'); // for external services like
             $table->string('payment_mode')->nullable();
             $table->string('total'); // for external services like

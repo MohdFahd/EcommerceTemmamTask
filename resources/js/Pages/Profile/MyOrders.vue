@@ -52,12 +52,9 @@
                                 <td
                                     class="text-muted align-middle border-top-0"
                                 >
-                                    <a
-                                        href="OrderTracking.php?tracking_no=Anon70583221"
+                                    <Link
                                         class="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
+                                        :href="'/profile/MyOrders/' + order.id"
                                     >
                                         <ion-icon
                                             name="eye-outline"
@@ -65,16 +62,16 @@
                                             class="md hydrated"
                                             aria-label="eye outline"
                                         ></ion-icon>
-                                    </a>
+                                    </Link>
                                 </td>
-                                <td class="text-muted">
+                                <!-- <td class="text-muted">
                                     <button
                                         type="submit"
                                         data-order-id="28"
                                         id="cancel_order"
                                         class="cancel_order"
                                     ></button>
-                                </td>
+                                </td> -->
                             </tr>
                             <!-- Table body -->
                         </tbody>
