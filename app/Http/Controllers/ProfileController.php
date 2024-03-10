@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+
+     public function index()
+     {
+         return Inertia::render('Profile/index', [
+             'user' => Auth::user(),
+         ]);
+     }
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Edit', [
@@ -29,15 +37,16 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // dd($request->all());
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('profile.index')->with('message', 'User updated successfully');;
     }
 
     /**
@@ -59,5 +68,12 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function ShowOrder()
+    {
+        $user_id = Auth::user()->id;
+        $orders = Order::where("user_id",$user_id)->get();
+        return Inertia::render('Profile/MyOrders',compact('orders'));
     }
 }

@@ -85,9 +85,9 @@
             </div>
 
             <div class="header-user-actions">
-                <button class="action-btn">
+                <Link href="/profile/show" class="action-btn" method="get">
                     <ion-icon :color="blue" name="person-outline"></ion-icon>
-                </button>
+                </Link>
 
                 <Link href="/favorites/">
                     <button class="action-btn">
