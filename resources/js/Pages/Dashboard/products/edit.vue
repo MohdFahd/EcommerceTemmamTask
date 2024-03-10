@@ -4,10 +4,10 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-between">
-                        <h6>Categories Edit</h6>
+                        <h6>Products Edit</h6>
                         <div>
                             <Link
-                                href="/admin/categories"
+                                href="/admin/products"
                                 class="btn btnnew btn-warning text-dark mx-3"
                             >
                                 Back
@@ -31,7 +31,7 @@
                                             name="name"
                                             class="form-control"
                                             id="floatingInput"
-                                            placeholder="Enter The Name Of Category"
+                                            placeholder="Enter The Name Of product"
                                         />
                                         <label for="floatingInput">Name</label>
 
@@ -47,13 +47,13 @@
                                         <input
                                             type="text"
                                             name="Parent"
-                                            v-model="form.parent"
+                                            v-model="form.category"
                                             class="form-control"
                                             id="floatingInput"
                                             placeholder="name@example.com"
                                         />
                                         <label for="floatingInput"
-                                            >parent</label
+                                            >category</label
                                         >
                                     </div>
                                 </div>
@@ -84,11 +84,7 @@
                                         type="file"
                                         class="form-control"
                                     />
-                                    <img
-                                        :src="category.img"
-                                        width="5%"
-                                        alt=""
-                                    />
+                                    <img :src="product.img" width="5%" alt="" />
                                     <span
                                         class="text-danger"
                                         v-if="form.errors.img"
@@ -101,7 +97,7 @@
                                     name="AddCategory"
                                     class="btn btn-primary m-3"
                                 >
-                                    Edit Category
+                                    Edit product
                                 </button>
                             </div>
                         </form>
@@ -117,14 +113,14 @@ import { Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 
-const { category } = defineProps({
-    category: { type: Object, required: true },
+const { product } = defineProps({
+    product: { type: Object, required: true },
 });
 let form = useForm({
-    name: category.name,
-    parent: category.parent_id,
-    description: category.description,
-    img: category.img,
+    name: product.name,
+    parent: product.parent_id,
+    description: product.description,
+    img: product.img,
     _method: "PUT",
 });
 const handleFileInputChange = (event) => {
@@ -133,7 +129,7 @@ const handleFileInputChange = (event) => {
 };
 
 const submit = () => {
-    form.post(`/admin/categories/update/${category.id}`, {
+    form.post(`/admin/categories/update/${product.id}`, {
         preserveState: true,
         onSuccess: (page) => showAlert(page),
         // onError: () => passwordInput.value.focus(),

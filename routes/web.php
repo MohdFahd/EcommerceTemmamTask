@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\CategoeryContoller;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
@@ -67,8 +68,12 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::get('/admin/categories/create', [CategoeryContoller::class, 'create'])->name('admin.categories.create');
     Route::post('/admin/categories/store', [CategoeryContoller::class, 'store'])->name('admin.categories.store');
     Route::get('/admin/categories/edit/{category}', [CategoeryContoller::class, 'edit'])->name('admin.categories.edit');
-    Route::patch('/admin/categories/update/{category}', [CategoeryContoller::class, 'update'])->name('admin.categories.update');
+    Route::put('/admin/categories/update/{category}', [CategoeryContoller::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{id}', [CategoeryContoller::class, 'destroy'])->name('admin.categories.destroy');
+
+    Route::resources(['/admin/products' => AdminProductController::class,]);
+
+
 });
 
 require __DIR__.'/auth.php';

@@ -76,7 +76,7 @@ class CategoeryContoller extends Controller
     public function update(Request $request, Category $category)
     {
 
-        dd($request->all());
+        // dd($request->all());
         $attributes = request()->validate([
             'name' => ['required','string','max:255'],
             'description' => ['required','string'],
