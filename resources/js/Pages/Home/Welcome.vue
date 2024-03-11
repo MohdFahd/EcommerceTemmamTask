@@ -87,8 +87,10 @@ export default {
                             v-for="category in categories"
                             :key="category.id"
                             :name="category.name"
+                            :img="category.img"
                             :SubCategory="category.children"
                         />
+                        <!-- :value="category.product_count" -->
                     </ul>
                 </div>
 

@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->with('category','productimg')->get();
-        // $buyingOffers = BuyingOffer::latest()->with('product')->get();
+        $buyingOffers = BuyingOffer::latest()->get();
         // $categories = Category::with('children')->whereNull('parent_id')->get();
         $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
             ->selectRaw('categories.id, COUNT(products.id) as product_count')
@@ -24,9 +24,9 @@ class ProductController extends Controller
             ->get()
             ->keyBy('id')
             ->map->product_count;
-        $buyingOffers = Cache::remember('buyingOffers', 86400, function () {
-            return BuyingOffer::latest()->with('product')->get();
-        });
+        // $buyingOffers = Cache::remember('buyingOffers', 86400, function () {
+        //     return BuyingOffer::latest()->with('product')->get();
+        // });
         $categories = Cache::remember('categories', 86400 , function () {
             return Category::with('children')
                 ->whereNull('parent_id')
@@ -67,7 +67,20 @@ class ProductController extends Controller
                     'product_count' => $categoryProductCounts->get($category->id, 0)
                 ];
             }),
-            'buyingOffers' => $buyingOffers,
+            'buyingOffers' => $buyingOffers->map(function ($buyingOffers) {
+                return [
+                    'id'=>$buyingOffers->id,
+                    'proId' => $buyingOffers->product->id,
+                    'name' =>$buyingOffers->product->name,
+                    'description' => $buyingOffers->product->description,
+                    'img' => $buyingOffers->product->img,
+                    'old_price' =>$buyingOffers->product->old_price,
+                    'new_price' => $buyingOffers->product->new_price,
+                    'quantity' => $buyingOffers->product->quantity,
+                    'countdownSeconds' => strtotime($buyingOffers->end_date) - strtotime(now()),
+                ];
+            }),
+
     ]);
     }
     public function display(Product $product)

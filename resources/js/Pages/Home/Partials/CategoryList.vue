@@ -7,7 +7,7 @@
         >
             <div class="menu-title-flex">
                 <img
-                    src="assets/images/icons/coat.svg"
+                    :src="img"
                     alt="alt"
                     width="30"
                     height="30"
@@ -72,6 +72,12 @@ export default {
             type: Array,
         },
         name: {
+            type: String,
+        },
+        img: {
+            type: String,
+        },
+        value: {
             type: String,
         },
     },

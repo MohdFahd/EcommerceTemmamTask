@@ -19,8 +19,8 @@ class BuyingOfferFactory extends Factory
         return [
             'product_id' => $this->faker->numberBetween(1, 10),
             'description' => $this->faker->text(),
-            'start_date'=> $this->faker->date(),
-            'end_date'=> $this->faker->date(),
+            'start_date'=> now(),
+            'end_date'=> now()->addDays(7),
         ];
     }
 }

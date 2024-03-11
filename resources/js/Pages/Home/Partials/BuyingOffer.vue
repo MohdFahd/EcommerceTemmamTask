@@ -20,7 +20,7 @@
 
                 <a href="#">
                     <h3 class="showcase-title">
-                        {{ data.product.name }}
+                        {{ data.name }}
                     </h3>
                 </a>
 
@@ -29,9 +29,9 @@
                 </p>
 
                 <div class="price-box">
-                    <p class="price">${{ data.product.new_price }}</p>
+                    <p class="price">${{ data.new_price }}</p>
 
-                    <del>$ {{ data.product.old_price }} </del>
+                    <del>$ {{ data.old_price }} </del>
                 </div>
 
                 <button class="add-cart-btn">add to cart</button>
@@ -41,7 +41,7 @@
                         <p>already sold: <b>20</b></p>
 
                         <p>
-                            available: <b> {{ data.product.quantity }} </b>
+                            available: <b> {{ data.quantity }} </b>
                         </p>
                     </div>
 
@@ -53,23 +53,22 @@
 
                     <div class="countdown">
                         <div class="countdown-content">
-                            <p class="display-number">360</p>
-
+                            <p class="display-number">{{ days }}</p>
                             <p class="display-text">Days</p>
                         </div>
 
                         <div class="countdown-content">
-                            <p class="display-number">24</p>
+                            <p class="display-number">{{ hours }}</p>
                             <p class="display-text">Hours</p>
                         </div>
 
                         <div class="countdown-content">
-                            <p class="display-number">59</p>
+                            <p class="display-number">{{ minutes }}</p>
                             <p class="display-text">Min</p>
                         </div>
 
                         <div class="countdown-content">
-                            <p class="display-number">00</p>
+                            <p class="display-number">{{ seconds }}</p>
                             <p class="display-text">Sec</p>
                         </div>
                     </div>
@@ -79,14 +78,51 @@
     </div>
 </template>
 
-<script>
-export default {
-    props: {
-        data: {
-            type: Object,
-        },
+<script setup>
+import { ref, watch } from "vue";
+
+const { data } = defineProps({
+    data: { type: Object, required: true },
+});
+const timeupdate = ref(data.countdownSeconds);
+
+const days = ref(0);
+const hours = ref(0);
+const minutes = ref(0);
+const seconds = ref(0);
+let interval; // Declare the interval variable outside the watch
+
+watch(
+    timeupdate,
+    (value) => {
+        clearInterval(interval);
+        if (value > 0) {
+            interval = setInterval(() => {
+                if (timeupdate.value > 0) {
+                    timeupdate.value--;
+                    updateTime();
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
     },
-};
+    { immediate: true }
+);
+
+function updateTime() {
+    let remainingTime = timeupdate.value;
+    if (remainingTime <= 0) {
+        clearInterval(interval); // Clear the interval when the countdown reaches zero
+        return;
+    }
+    days.value = Math.floor(remainingTime / 86400);
+    remainingTime %= 86400;
+    hours.value = Math.floor(remainingTime / 3600);
+    remainingTime %= 3600;
+    minutes.value = Math.floor(remainingTime / 60);
+    seconds.value = remainingTime % 60;
+}
 </script>
 
 <style></style>
