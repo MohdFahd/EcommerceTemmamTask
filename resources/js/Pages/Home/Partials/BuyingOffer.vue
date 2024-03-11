@@ -2,11 +2,7 @@
     <div class="showcase-container">
         <div class="showcase">
             <div class="showcase-banner">
-                <img
-                    src="assets/images/products/shampoo.jpg"
-                    alt="shampoo, conditioner & facewash packs"
-                    class="showcase-img"
-                />
+                <img :src="data.img" :alt="data.name" class="showcase-img" />
             </div>
 
             <div class="showcase-content">
@@ -34,7 +30,13 @@
                     <del>$ {{ data.old_price }} </del>
                 </div>
 
-                <button class="add-cart-btn">add to cart</button>
+                <button
+                    class="add-cart-btn"
+                    @click="addToCart(data)"
+                    :disabled="isProgress"
+                >
+                    add to cart
+                </button>
 
                 <div class="showcase-status">
                     <div class="wrapper">
@@ -79,7 +81,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
+import { Link, router, usePage } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
 
 const { data } = defineProps({
     data: { type: Object, required: true },
@@ -123,6 +127,45 @@ function updateTime() {
     minutes.value = Math.floor(remainingTime / 60);
     seconds.value = remainingTime % 60;
 }
+
+const auth = usePage().props.auth;
+
+// const isProgress = ref(false);
+
+const addToCart = (product) => {
+    // isProgress.value = true;
+    if (auth.user && auth.user.id) {
+        const data = {
+            user_id: auth.user.id,
+            product_id: product.proId,
+            quantity: 1,
+        };
+
+        // If the product is already in the favorites, delete it
+        router.post("/carts/create", data, {
+            onSuccess: (page) => {
+                if (page.props.flash.message) {
+                    console.log("Success message:", page.props.flash.message);
+                    Swal.fire({
+                        toast: true,
+                        icon: "success",
+                        position: "top-start",
+                        showConfirmButton: false,
+                        title: page.props.flash.message,
+                        timer: 2000,
+                    });
+                    // isProgress.value = false;
+                }
+            },
+            preserveScroll: true,
+        });
+    } else {
+        // Handle the case where the user is not logged in
+        router.get("/login");
+        console.log("User is not logged in");
+        // You might want to display a message to the user or redirect them to the login page
+    }
+};
 </script>
 
 <style></style>

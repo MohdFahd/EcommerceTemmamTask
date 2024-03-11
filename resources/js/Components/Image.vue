@@ -1,6 +1,6 @@
 <template>
     <img
-        :src="'/assets/images/' + src + '.jpg'"
+        :src="src"
         :alt="alt"
         :width="width"
         :height="height"

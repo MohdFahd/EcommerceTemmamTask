@@ -2,8 +2,8 @@
     <div class="showcase">
         <a href="#" class="showcase-img-box" v-show="ShowImg">
             <Image
-                src="products/1"
-                alt="baby fabric shoes"
+                :src="content.img"
+                :alt="content.name"
                 classes="showcase-img"
                 width="75"
                 height="75"
@@ -52,15 +52,6 @@ defineProps({
     ShowImg: { type: Boolean, default: true },
     category_name: { type: String, default: true },
 });
-methods: {
-    // setCategory: {
-    //     if (category_name != "") {
-    //         this.category_name == category_name;
-    //     } else {
-    //         this.category_name = content.category;
-    //     }
-    // }
-}
 </script>
 
 <style></style>

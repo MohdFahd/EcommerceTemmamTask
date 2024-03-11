@@ -2,13 +2,13 @@
     <div class="showcase" v-for="product in ProductData" :key="product.id">
         <div class="showcase-banner">
             <Image
-                src="products/jacket-3"
+                :src="product.img"
                 alt="Mens Winter Leathers Jackets"
                 width="300"
                 classes="product-img default"
             />
             <Image
-                src="products/jacket-4"
+                :src="product.img"
                 alt="Mens Winter Leathers Jackets"
                 width="300"
                 classes="product-img hover"
