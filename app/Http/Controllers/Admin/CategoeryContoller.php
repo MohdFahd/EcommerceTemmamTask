@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class CategoeryContoller extends Controller
@@ -57,6 +58,7 @@ class CategoeryContoller extends Controller
         $path = "/assets/images/icons/" . $filename;
 
 
+
         Category::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -64,6 +66,7 @@ class CategoeryContoller extends Controller
         ]);
 
 
+        Cache::forget('categories'); // remove the cached categories from the cache
         return redirect()->route('admin.categories.create')->with('message', 'Category created successfully');
     }
 
@@ -100,6 +103,7 @@ class CategoeryContoller extends Controller
                 'description' => $request->description,
             ]);
         }
+        Cache::forget('categories'); // remove the cached categories from the cache
         return redirect()->route('admin.categories.edit', $category->id)->with('message', 'Category updated successfully');
     }
 
@@ -107,8 +111,11 @@ class CategoeryContoller extends Controller
     {
         $category = Category::find($id);
         //delete the img from public
-        unlink(public_path($category->img));
+        if(file_exists(public_path($category->img))){
+            unlink(public_path($category->img));
+        }
         $category->delete();
+        Cache::forget('categories'); // remove the cached categories from the cache
         return redirect()->back()->with('message', 'Category deleted successfully');
     }
 }

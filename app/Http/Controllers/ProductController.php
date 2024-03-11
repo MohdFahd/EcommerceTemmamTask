@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -14,15 +15,32 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->with('category','productimg')->get();
-        $buyingOffers = BuyingOffer::latest()->with('product')->get();
-        $categories = Category::with('children')->whereNull('parent_id')->get();
+        // $buyingOffers = BuyingOffer::latest()->with('product')->get();
+        // $categories = Category::with('children')->whereNull('parent_id')->get();
         $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
-        ->selectRaw('categories.id, COUNT(products.id) as product_count')
-        ->whereNull('categories.parent_id')
-        ->groupBy('categories.id')
-        ->get()
-        ->keyBy('id')
-        ->map->product_count;
+            ->selectRaw('categories.id, COUNT(products.id) as product_count')
+            ->whereNull('categories.parent_id')
+            ->groupBy('categories.id')
+            ->get()
+            ->keyBy('id')
+            ->map->product_count;
+        $buyingOffers = Cache::remember('buyingOffers', 86400, function () {
+            return BuyingOffer::latest()->with('product')->get();
+        });
+        $categories = Cache::remember('categories', 86400 , function () {
+            return Category::with('children')
+                ->whereNull('parent_id')
+                ->get();
+        });
+        // $categoryProductCounts = Cache::remember('categoryProductCounts', 60, function () {
+        //     return Category::leftJoin('products', 'categories.id', '=', 'products.category_id')
+        //         ->selectRaw('categories.id, COUNT(products.id) as product_count')
+        //         ->whereNull('categories.parent_id')
+        //         ->groupBy('categories.id')
+        //         ->get()
+        //         ->keyBy('id')
+        //         ->map->product_count;
+        // });
         return Inertia::render('Home/Welcome', [
             'products' => $products->map(function ($product) {
                 return [
