@@ -44,17 +44,30 @@
                                     <div
                                         class="form-floating mb-3 col-lg-6 col-md-6"
                                     >
-                                        <input
-                                            type="text"
-                                            name="Parent"
-                                            v-model="form.parent"
-                                            class="form-control"
-                                            id="floatingInput"
-                                            placeholder="name@example.com"
-                                        />
-                                        <label for="floatingInput"
-                                            >parent</label
+                                        <select
+                                            name="cat_id"
+                                            class="form-select form-label p-2"
+                                            aria-label="Default select example"
+                                            aria-placeholder="sdadasd"
+                                            require=""
+                                            v-model="form.parent_id"
                                         >
+                                            <option selected value="">
+                                                Select one of the Category
+                                            </option>
+                                            <option
+                                                v-for="category in categories"
+                                                :key="category.id"
+                                                :value="category.id"
+                                            >
+                                                {{ category.name }}
+                                            </option>
+                                        </select>
+                                        <span
+                                            class="text-danger"
+                                            v-if="form.errors.category_id"
+                                            v-text="form.errors.category_id"
+                                        ></span>
                                     </div>
                                 </div>
                                 <div
@@ -117,12 +130,14 @@ import { Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 
-const { category } = defineProps({
+const { category, categories } = defineProps({
     category: { type: Object, required: true },
+    categories: { type: Object, required: true },
 });
+
 let form = useForm({
     name: category.name,
-    parent: category.parent_id,
+    parent_id: category.parent_id,
     description: category.description,
     img: category.img,
     _method: "PUT",

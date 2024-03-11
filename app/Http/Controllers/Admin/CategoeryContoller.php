@@ -38,8 +38,9 @@ class CategoeryContoller extends Controller
 
     public function create()
     {
-
-        return Inertia::render('Dashboard/category/Create');
+        // Retrive the id and name of the category
+        $categories = Category::whereNull('parent_id')->get(['id', 'name']);
+        return Inertia::render('Dashboard/category/Create',compact('categories'));
     }
 
     public function store(Request $request)
@@ -57,12 +58,11 @@ class CategoeryContoller extends Controller
         $image->move(public_path('/assets/images/icons'), $filename);
         $path = "/assets/images/icons/" . $filename;
 
-
-
         Category::create([
             'name' => $request->name,
             'description' => $request->description,
             'img' => $path,
+            'parent_id' => $request->parent_id,
         ]);
 
 
@@ -73,8 +73,10 @@ class CategoeryContoller extends Controller
     public function edit(Category $category)
     {
         // dd($category);
+        $categories = Category::whereNull('parent_id')->get(['id', 'name']);
         return Inertia::render('Dashboard/category/edit', [
             'category' => $category,
+            'categories' => $categories,
         ]);
     }
     public function update(Request $request, Category $category)
@@ -84,6 +86,7 @@ class CategoeryContoller extends Controller
         $attributes = request()->validate([
             'name' => ['required','string','max:255'],
             'description' => ['required','string'],
+            // 'parent_id' => ['required','string', 'exists:category,id' ],
             // 'img' => ['required'],
         ]);
         $image = $request->file('img');
@@ -96,11 +99,13 @@ class CategoeryContoller extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'img' => $path,
+                'parent_id' => $request->parent_id,
             ]);
         } else {
             $category->update([
                 'name' => $request->name,
                 'description' => $request->description,
+                'parent_id' => $request->parent_id,
             ]);
         }
         Cache::forget('categories'); // remove the cached categories from the cache
