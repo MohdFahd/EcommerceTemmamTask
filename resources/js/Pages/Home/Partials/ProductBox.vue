@@ -9,14 +9,17 @@
                 height="75"
             />
         </a>
-
         <div class="showcase-content">
-            <a href="#">
+            <!-- <a href="#">
                 <h4 class="showcase-title">
                     {{ content.name }}
                 </h4>
-            </a>
-
+            </a> -->
+            <Link :href="'/products/' + content.name" method="get" as="button">
+                <h4 class="showcase-title">
+                    {{ content.name }}
+                </h4>
+            </Link>
             <Button
                 v-show="categoryLink"
                 :text="content.category"
@@ -44,6 +47,7 @@
 <script setup>
 import Image from "@/Components/Image.vue";
 import Button from "@/Components/Button.vue";
+import { Link } from "@inertiajs/vue3";
 
 defineProps({
     content: { type: Object, required: true },
