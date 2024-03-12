@@ -40,7 +40,7 @@
                                     <div class="col-3 col-md-2 col-lg-2">
                                         <!-- img -->
                                         <Image
-                                            src="products/jacket-4"
+                                            :src="cart.img"
                                             alt="Mens Winter Leathers Jackets"
                                             width=""
                                             classes="img-fluid"

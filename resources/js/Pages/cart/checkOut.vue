@@ -173,7 +173,7 @@
                                         >
                                             <div class="col-2 col-md-2">
                                                 <Image
-                                                    src="products/jacket-4"
+                                                    :src="cart.img"
                                                     alt="Mens Winter Leathers Jackets"
                                                     width=""
                                                     classes="img-fluid"

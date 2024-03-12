@@ -12,7 +12,7 @@
                             "
                         >
                             <Image
-                                src="products/jacket-4"
+                                :src="product.img"
                                 alt="Mens Winter Leathers Jackets"
                                 width="300"
                                 classes="product-img hover"
@@ -26,7 +26,7 @@
                                 <div class="thumbnails-img">
                                     <!-- img -->
                                     <Image
-                                        src="products/jacket-4"
+                                        :src="product.img"
                                         alt="Mens Winter Leathers Jackets"
                                         width="300"
                                         classes="product-img hover"
@@ -37,7 +37,7 @@
                                 <div class="thumbnails-img">
                                     <!-- img -->
                                     <Image
-                                        src="products/jacket-4"
+                                        :src="product.img"
                                         alt="Mens Winter Leathers Jackets"
                                         width="300"
                                         classes="product-img hover"
@@ -48,7 +48,7 @@
                                 <div class="thumbnails-img">
                                     <!-- img -->
                                     <Image
-                                        src="products/jacket-4"
+                                        :src="product.img"
                                         alt="Mens Winter Leathers Jackets"
                                         width="300"
                                         classes="product-img hover"
@@ -59,7 +59,7 @@
                                 <div class="thumbnails-img">
                                     <!-- img -->
                                     <Image
-                                        src="products/jacket-4"
+                                        :src="product.img"
                                         alt="Mens Winter Leathers Jackets"
                                         width="300"
                                         classes="product-img hover"
