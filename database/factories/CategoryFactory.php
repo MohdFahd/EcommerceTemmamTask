@@ -21,7 +21,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat modi amet ducimus fugit assumenda? Quibusdam omnis consectetur non nihil corrupti dicta repellat quae voluptas, ea, libero, similique accusantium asperiores nam.',
-            'img' => 'assets/images/icons/coat.svg',
+            'img' => '/assets/images/icons/coat.svg',
             'parent_id' => $parentCategoryID ?: null, // Assign a random parent category ID if available, otherwise assign null // Assign a random parent category ID
         ];
     }

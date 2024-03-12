@@ -292,7 +292,7 @@ let form = useForm({
     phone: "",
     zip: "",
     BusinessName: "",
-    total: ItemSubtotal,
+    total: Subtotal,
     carts: carts,
     user_id: usePage().props.auth.user.id,
 });

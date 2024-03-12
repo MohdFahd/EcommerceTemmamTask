@@ -244,7 +244,13 @@
                 </Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/billing.html">
+                <Link
+                    href="/admin/orders"
+                    class="nav-link"
+                    :class="{
+                        active: $page.url.startsWith('/admin/orders'),
+                    }"
+                >
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
                     >
@@ -292,8 +298,8 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Billing</span>
-                </a>
+                    <span class="nav-link-text ms-1">Orders</span>
+                </Link>
             </li>
 
             <li class="nav-item">

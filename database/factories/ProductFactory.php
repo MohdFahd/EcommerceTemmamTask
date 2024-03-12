@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'category_id' => $this->faker->numberBetween(1, 10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->text(),
-            'img' => $this->faker->imageUrl(),
+            'img' => '/assets/images/products/shampoo.jpg',
             'new_price' => $this->faker->numberBetween(100, 1000),
             'old_price' => $this->faker->numberBetween(100, 1000),
             'quantity' => $this->faker->numberBetween(1, 10),

@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Models\cart;
@@ -73,8 +74,15 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::get('/admin/categories/edit/{category}', [CategoeryContoller::class, 'edit'])->name('admin.categories.edit');
     Route::put('/admin/categories/update/{category}', [CategoeryContoller::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{id}', [CategoeryContoller::class, 'destroy'])->name('admin.categories.destroy');
-
+    //all routes for products
     Route::resources(['/admin/products' => AdminProductController::class,]);
+
+    //routes for orders
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/admin/orders/{order}/edit', [OrderController::class, 'edit'])->name('admin.orders.edit');
+    Route::patch('/admin/orders/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
+
+
 
 
 });
