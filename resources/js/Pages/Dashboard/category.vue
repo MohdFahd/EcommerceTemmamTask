@@ -36,11 +36,11 @@
                                             Category
                                         </th>
 
-                                        <th
+                                        <!-- <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                                         >
                                             Status
-                                        </th>
+                                        </th> -->
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                                         >
@@ -75,7 +75,7 @@
                                             </div>
                                         </td>
 
-                                        <td
+                                        <!-- <td
                                             class="align-middle text-center text-sm"
                                         >
                                             <span
@@ -90,7 +90,7 @@
                                             >
                                                 Offline
                                             </span>
-                                        </td>
+                                        </td> -->
                                         <td class="align-middle text-center">
                                             <span
                                                 class="text-secondary text-xs font-weight-bold"
