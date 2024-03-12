@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->with('category','productimg')->get();
+        $products = Product::where('status', 0)->latest()->with('category','productimg')->get();
         $buyingOffers = BuyingOffer::latest()->get();
         // $categories = Category::with('children')->whereNull('parent_id')->get();
         $categoryProductCounts = Category::leftJoin('products', 'categories.id', '=', 'products.category_id')

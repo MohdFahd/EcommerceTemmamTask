@@ -1,5 +1,5 @@
 <template>
-    <div class="showcase-container">
+    <div class="showcase-container" v-show="timeupdate >= 0">
         <div class="showcase">
             <div class="showcase-banner">
                 <img :src="data.img" :alt="data.name" class="showcase-img" />
