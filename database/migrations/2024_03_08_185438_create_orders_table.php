@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +26,8 @@ return new class extends Migration
             $table->string('status')->default('Pending'); // for external services like
             $table->string('payment_mode')->nullable();
             $table->string('total'); // for external services like
+            // add expect date for the order and defult after four days of created
+            // $table->timestamp('expect_date')->nullable()->default(Carbon::now()->addDays(4));
             $table->timestamps();
         });
     }

@@ -1,5 +1,13 @@
 <template>
     <div class="container my-2">
+        <div
+            class="alert alert-warning"
+            v-if="order.status == 'Completed'"
+            role="alert"
+        >
+            Yapiiiiiiii! 🎉 Your order has been delivered and is now in your
+            hands.
+        </div>
         <main>
             <div class="row justify-content-between">
                 <div class="card text-center mx-1 col">
@@ -348,7 +356,7 @@
                                             >{{ order.status }}</span
                                         >
                                         <span
-                                            v-if="order.status == 'Delivered'"
+                                            v-if="order.status == 'Completed'"
                                             class="badge fs-5 p-3 bg-success"
                                             >{{ order.status }}</span
                                         >
