@@ -46,7 +46,7 @@ class ProfileController extends Controller
         // if ($request->user()->isDirty('email')) {
         //     $request->user()->email_verified_at = null;
         // }
-            
+
         $request->user()->save();
 
         return Redirect::route('profile.index')->with('message', 'User updated successfully');;
@@ -82,7 +82,7 @@ class ProfileController extends Controller
     public function ShowOrderItem(order $order)
     {
         $order = $order;
-        $order_items = order_item::find($order->id)->with('product')->get();
+        $order_items = order_item::where('order_id', $order->id)->get();
         //map the order_items to the order
         return Inertia::render('Profile/MyOrderItem', [
         'order' => $order,

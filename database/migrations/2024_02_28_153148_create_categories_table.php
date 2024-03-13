@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->unsignedBigInteger('parent_id')->nullable(); // Nullable because top-level categories have no parent
             $table->timestamps();
             // Define foreign key constraint
-            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('categories')->nullOnDelete();
         });
     }
 

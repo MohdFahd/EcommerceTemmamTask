@@ -36,6 +36,7 @@
                 v-for="item in SubCategory"
                 :key="item.id"
                 :SubContent="item"
+                :value="value"
             />
         </ul>
     </li>

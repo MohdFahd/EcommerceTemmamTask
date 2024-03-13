@@ -114,6 +114,7 @@ class CategoeryContoller extends Controller
 
     public function destroy($id)
     {
+
         $category = Category::find($id);
         //delete the img from public
         if(file_exists(public_path($category->img))){

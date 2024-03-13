@@ -1,15 +1,21 @@
 <template>
     <li class="sidebar-submenu-category">
-        <a :href="href" class="sidebar-submenu-title">
+        <Link
+            :href="'/categories/' + SubContent.name"
+            class="sidebar-submenu-title"
+            method="get"
+        >
             <p class="product-name">{{ SubContent.name }}</p>
             <data :value="value" class="stock" title="Available Stock">{{
                 value
             }}</data>
-        </a>
+        </Link>
     </li>
 </template>
 
 <script>
+import { Link } from "@inertiajs/vue3";
+
 export default {
     props: {
         href: {
@@ -31,6 +37,9 @@ export default {
             name: this.SubContent.name,
             img: this.SubContent.img,
         });
+    },
+    components: {
+        Link,
     },
 };
 </script>

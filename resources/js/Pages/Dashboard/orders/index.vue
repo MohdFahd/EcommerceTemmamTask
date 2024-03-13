@@ -95,16 +95,18 @@
                                             <span
                                                 class="badge badge-sm bg-gradient-success"
                                                 v-if="
-                                                    order.status == 'Delivered'
+                                                    order.status == 'Completed'
                                                 "
                                             >
-                                                Delivered
+                                                Completed
                                             </span>
                                             <span
                                                 class="badge badge-sm bg-gradient-danger"
-                                                v-if="order.status == 'Cancel'"
+                                                v-if="
+                                                    order.status == 'Canceled'
+                                                "
                                             >
-                                                Cancel
+                                                Canceled
                                             </span>
                                         </td>
 

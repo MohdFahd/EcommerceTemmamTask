@@ -88,6 +88,7 @@ export default {
                             :key="category.id"
                             :name="category.name"
                             :img="category.img"
+                            :value="category.product_count"
                             :SubCategory="category.children"
                         />
                         <!-- :value="category.product_count" -->
